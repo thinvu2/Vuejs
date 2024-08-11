@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./CDN.js"></script>
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+    <div id="app">
+        <ul class="tabs">
+            <li v-on:click="changeTabs('login')">Dang nhap</li>
+            <li v-on:click="changeTabs('register')">Dang ky</li>
+        </ul>
+        <div class="login" v-if="tabSelected === 'login'">
+            <h2>Form Dang Nhap</h2>
+            <form action="">
+                <input type="text" placeholder="username">
+                <input type="password" placeholder="password">
+            </form>
+        </div>
+        <div class="register" v-else-if="tabSelected === 'register'">
+            <h2>Form Dang Ky</h2>
+            <form action="">
+                <input type="text" placeholder="username">
+                <input type="password" placeholder="password">
+                <input type="password" placeholder="re-password">
+            </form>
+        </div>
+        <div class="list-blog">
+
+            <div class="blog" v-for="(item, index) in listul" v-bind:key="index">
+                <div class="title">{{item.title}}</div>
+                <div class="description">{{item.body}}</div>
+            </div>
+        </div>
+        <ul>
+            <li v-for ="(value, key) in arrTest" v-bind:key = "key">
+                {{ value }}
+            </li>
+        </ul>
+        <hr>
+        <ul>
+            <li v-for = "(value, key) in objScores" >
+                {{ key }}: {{ value }}
+            </li>
+        </ul>
+    </div>
+</body>
+</html>
+<script>
+    const { createApp } = Vue;
+    const app = createApp({
+        data() {
+            return {
+                objScores: {Math: 9},
+                arrTest:[1,2,3,4,5,6,7],
+                tabSelected: 'login',
+                listul: [
+                    {
+                        "userID": 1,
+                        "id": 1,
+                        "title": "ahihi1",
+                        "body": "body1"
+                    },
+                    {
+                        "userID": 1,
+                        "id": 2,
+                        "title": "ahihi2",
+                        "body": "body2"
+                    },
+                    {
+                        "userID": 1,
+                        "id": 3,
+                        "title": "ahihi3",
+                        "body": "body3"
+                    },
+                    {
+                        "userID": 1,
+                        "id": 4,
+                        "title": "ahihi4",
+                        "body": "body4"
+                    },
+                    {
+                        "userID": 1,
+                        "id": 5,
+                        "title": "ahihi5",
+                        "body": "body5"
+                    },
+                ]
+            };
+        },
+        methods: {
+            changeTabs: function (tab) {
+                this.tabSelected = tab;
+            },
+            getArrTest(){
+                return this.arrTest;
+            }
+        }
+    }).mount('#app')
+</script>
+<style>
+    .list-blog {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .list-blog .blog {
+        width: 20%;
+        border: 1px solid #000;
+    }
+    .title{
+        font-weight: 500;
+        font-size: 18px;
+        color: forestgreen;
+    }
+
+    .tabs {
+        margin: 0;
+        padding: 0;
+    }
+
+    .tabs li {
+        display: inline-block;
+        padding: 10px 15px;
+        border: 1px solid #000;
+    }
+
+    .login,
+    .register {
+        padding: 15PX;
+        border: 2px solid green;
+        margin-top: 20px;
+    }
+</style>
