@@ -1,11 +1,17 @@
 <template>
     <main>
-        <h3>{{ text }}</h3>
+        <p>{{ userahihi.email }}</p>
     </main>
 </template>
 <script>
 export default {
     name:'comp-user',
+    props: {
+        userahihi: {
+            type: Object,
+            default: null
+        }
+    },
     data() {
         return{
             text:'This is User',
