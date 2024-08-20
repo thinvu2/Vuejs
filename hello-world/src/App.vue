@@ -1,15 +1,24 @@
 <template>
   <img src="/public/assets/logo.png" alt="">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <comp-header />
+  <comp-list-products />
+  <list-users />
+  <comp-footer />
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import CompHeader from './components/CompHeader.vue'
+import CompFooter from './components/CompFooter.vue'
+import CompListProducts from './components/CompListProducts.vue'
+import ListUsers from './components/ListUsers.vue'
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    //HelloWorld,
+    CompHeader,
+    CompFooter,
+    CompListProducts,
+    ListUsers
   }
 }
 </script>
