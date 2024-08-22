@@ -1,10 +1,18 @@
 <template>
   <div id="app">
     <div class="container">
-      <comp-header v-bind:titleHeader = "title"/>
+      <button v-on:click="title = 'Learn vuejs ahihi'">Thay doi title tu component app.vue</button>
+      <comp-header 
+        v-bind:ListUsers="ListUsers"
+        v-bind:titleHeader = "title"
+        v-on:changeTitleEvent = "handleChangeTitle"
+      />
       <comp-list-products />
-      <list-users v-bind:ListUsers="ListUsers"/>
-      <comp-footer/>
+      <list-users 
+        v-bind:ListUsers="ListUsers"
+        v-on:deleteUserEvent="handleDeleteUser"
+      />
+      <comp-footer v-bind:titleFooter = "title"/>
     </div>
   </div>
 </template>
@@ -18,21 +26,44 @@ export default {
   name: 'App',
   data(){
     return{
-      title:'Hello vue',
+      title:'Hello vuejs',
       ListUsers:[
-        { email: '1@gmail.com', active: false },
-        { email: '2@gmail.com', active: true },
-        { email: '3@gmail.com', active: false },
-        { email: '4@gmail.com', active: true },
+        { id:0, email: '1@gmail.com', active: false },
+        { id:1,email: '2@gmail.com', active: true },
+        { id:2,email: '3@gmail.com', active: false },
+        { id:3,email: '4@gmail.com', active: true },
       ]
-    }
+    };
   },
   components: {
     CompHeader,
     CompFooter,
     CompListProducts,
     ListUsers
-  }
+  },
+  methods:{
+    handleChangeTitle(data){
+      //this.title = 'Hoc lap trinh do header.vue'
+      this.title = data.title;
+      console.log("handleChangeTitle duoc goi sau khi kich hoat thanh cong App.vue");
+    },
+    handleDeleteUser(data){
+      let indexDelete = -1;
+      this.ListUsers.forEach((element, idx) => {
+        //console.log('element.id: ', element.id, ' idx: ', idx, ' data.id: ',data.id);
+        //console.log('element: ',element);
+        if(element.id === data.id){
+          indexDelete = idx;
+        }
+      });
+      if(indexDelete != -1){
+        this.ListUsers.splice(indexDelete, 1);
+       //console.log('test: ', test);
+      }
+      //console.log('indexDelete sau khi chay vong for', indexDelete);
+      //console.log('handleDeleteUser trong App.vue', data);
+    }
+  },
 }
 </script>
 

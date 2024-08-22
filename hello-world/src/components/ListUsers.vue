@@ -3,7 +3,8 @@
         <div class="user">
             <comp-user
             v-for="(user, index) in ListUsers" v-bind:key="index"
-            v-bind:userahihi="user"
+            v-bind:user="user"
+            v-on:deleteUser="deleteUser"
             />
         </div>
     </div>
@@ -27,6 +28,12 @@ export default {
     },
     components: {
         CompUser
+  },
+  methods:{
+    deleteUser(data){
+        console.log('deleteUser ListUsers.vue', data);
+        this.$emit('deleteUserEvent', data);
+    },
   }
 }
 </script>
@@ -37,9 +44,10 @@ export default {
         justify-content: space-between;
     }
     .list-user .user{
+        display: inline-block;
         padding: 30px;
-        margin-bottom: 30px;
+        margin: 30px;
         border: 1px solid #333;
-        width: calc(33.3333% - 20px);
+        /* width: calc(33.3333% - 20px); */
     }
 </style>

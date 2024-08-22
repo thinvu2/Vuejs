@@ -1,13 +1,13 @@
 <template>
     <footer>
-        <h2>{{ titleHeader }}</h2>
+        <h2>{{ titleFooter }}</h2>
     </footer>
 </template>
 <script>
 export default {
     name:'comp-footer',
     props: {
-        titleHeader: {
+        titleFooter: {
             type: String,
             default: "ahihi"
         },
