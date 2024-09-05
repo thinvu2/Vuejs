@@ -3,7 +3,7 @@
     <div class="container">
       <button v-on:click="title = 'Learn vuejs ahihi'">Thay doi title tu component app.vue</button>
       <comp-header 
-        v-bind:ListUsers="ListUsers"
+        v-bind:ListUsers = "ListUsers"
         v-bind:titleHeader = "title"
         v-on:changeTitleEvent = "handleChangeTitle"
       />
@@ -12,6 +12,12 @@
         v-bind:ListUsers="ListUsers"
         v-on:deleteUserEvent="handleDeleteUser"
       />
+      <demo-ref/>
+      <demo-slot>
+        <div class="app-slot">
+          <p>CTCP Chứng khoán BIDV</p>
+        </div>
+      </demo-slot>
       <comp-footer v-bind:titleFooter = "title"/>
     </div>
   </div>
@@ -22,6 +28,8 @@ import CompHeader from './components/CompHeader.vue'
 import CompFooter from './components/CompFooter.vue'
 import CompListProducts from './components/CompListProducts.vue'
 import ListUsers from './components/ListUsers.vue'
+import DemoRef from './components/DemoRef.vue'
+import DemoSlot from './components/DemoSlot.vue'
 export default {
   name: 'App',
   data(){
@@ -39,7 +47,9 @@ export default {
     CompHeader,
     CompFooter,
     CompListProducts,
-    ListUsers
+    ListUsers,
+    DemoRef,
+    DemoSlot
   },
   methods:{
     handleChangeTitle(data){
