@@ -1,17 +1,25 @@
 <template>
-    <div class="wrapper-controls"
-        v-on:click = "newGame"
-    >
-        <button class="control btn-new"><i class="ion-ios-plus-outline"></i>New game</button>
-        <button class="control btn-roll"><i class="ion-ios-loop"></i>Roll dice</button>
-        <button class="control btn-hold"><i class="ion-ios-download-outline"></i>Hold</button>
+    <div class="wrapper-controls">
+        <button class="control btn-new" v-on:click = "newGame"><i class="ion-ios-plus-outline"></i>New game</button>
+        <button class="control btn-roll" v-on:click = "rollDice"><i class="ion-ios-loop"></i>Roll dice</button>
+        <button class="control btn-hold" v-on:click = "$emit('handleHoldScore')"><i class="ion-ios-download-outline"></i>Hold</button>
             
-        <input type="number" placeholder="Final score" class="final-score">
+        <input type="number" 
+            placeholder="Final score" 
+            class="final-score" 
+            v-bind:value="finalScore"
+            v-on:input = "$emit('handleChangeFinalScore', $event)"
+            v-bind:disabled="isPlaying"
+        />
     </div>         
 </template>
 <script>
 export default {
     name:'controls',
+    props:{
+        finalScore:{ type: [Number, String], default: 0},
+        isPlaying: {type: Boolean, default: false}
+    },
     data() {
         return{
 
@@ -19,10 +27,14 @@ export default {
     },
     methods:{
         newGame(){
-            console.log("new game controls.vue: ");
+          //  console.log("newGame Controls.vue: ");
             //Kich hoat su kien handleNewGame vua app truyen vao
             this.$emit('handleNewGame');
-        }
+        },
+        rollDice(){
+          console.log("rollDice Controls.vue");
+            this.$emit('handleRollDice');
+        },
     }
 }
 </script>

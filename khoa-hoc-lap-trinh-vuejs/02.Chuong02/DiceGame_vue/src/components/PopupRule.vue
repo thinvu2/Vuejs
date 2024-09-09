@@ -7,7 +7,8 @@
             </p>
             <button 
                 v-on:click = "confirm"
-                class="confirm">Da hieu</button>
+                class="confirm">Da hieu
+            </button>
         </div>
     </div>
 </template>
@@ -30,7 +31,7 @@ export default{
     },
     methods:{
         confirm(){
-            console.log("handleConfirm popup.vue ");
+            //console.log("handleConfirm popup.vue ");
             this.$emit('handleConfirm');
         }
     }

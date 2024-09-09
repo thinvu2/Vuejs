@@ -1,7 +1,10 @@
 <template>
     <div class="wrapper-player">
-        <div class="player-panel">
-                <div class="player-name" v-bind:class="{ active: activePlayer === 0 }">Player 1</div>
+        <div class="player-panel" v-bind:class="{ 
+            active: activePlayer == 0 && !this.isWinner,
+            winner: activePlayer == 0 && this.isWinner
+            }">
+                <div class="player-name">{{ getNamePlayer(0) }}</div>
                 <div class="player-score">{{ scoresPlayer[0] }}</div>
                 <div class="player-current-box">
                     <div class="player-current-label">Current</div>
@@ -9,14 +12,17 @@
                 </div>
             </div>
             
-            <div class="player-panel" v-bind:class="{ active: activePlayer === 1 }">
-                <div class="player-name">Player 2</div>
-                <div class="player-score">{{ scoresPlayer[1] }}</div>
-                <div class="player-current-box">
-                    <div class="player-current-label">Current</div>
-                    <div class="player-current-score">{{ activePlayer === 1 ? currentScore : 0 }}</div>
-                </div>
+        <div class="player-panel" v-bind:class="{ 
+             active: activePlayer == 1 && !this.isWinner,
+             winner: activePlayer == 1 && this.isWinner
+            }">
+            <div class="player-name">{{ getNamePlayer(1) }}</div>
+            <div class="player-score">{{ scoresPlayer[1] }}</div>
+            <div class="player-current-box">
+                <div class="player-current-label">Current</div>
+                <div class="player-current-score">{{ activePlayer === 1 ? currentScore : 0 }}</div>
             </div>
+        </div>
     </div>
 </template>
 <script>
@@ -25,18 +31,29 @@ export default {
     props:{
             activePlayer: { type: Number, default: 0 },
             scoresPlayer: { type: Array, default: [0, 0] },
-            currentScore: { type: Number, default: 0 }
+            currentScore: { type: Number, default: 0 },
+            isWinner: {type: Boolean, default: false}
         },
     data() {
         return{
             
         }
     },
+    methods:{
+        getNamePlayer(index){
+            let defaultName = 'Player ' + (index + 1);
+            console.log(index, defaultName, this.isWinner, this.activePlayer)
+            if(this.activePlayer == index && this.isWinner){
+                defaultName = 'Winner';
+                console.log('defaultName', defaultName);
+            }return defaultName;
+            
+        }
+    }
 }
 </script>
 <style>
-/**** PLAYERS
-***********************************************/
+/* PLAYERS */
 .player-panel {
     width: 50%;
     float: left;
