@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
     <div class="wrapper-popup" v-bind:class ="getClassPopup">
         <div class="rule">
             <h3>Luat choi</h3>
@@ -31,14 +31,12 @@ export default{
     },
     methods:{
         confirm(){
-            //console.log("handleConfirm popup.vue ");
             this.$emit('handleConfirm');
         }
     }
 }
 </script>
 <style>
-/* PopupRule */
 .wrapper-popup {
         position: fixed;
         top: 0;
@@ -68,7 +66,7 @@ export default{
     .open-popup .rule {
         transform: translate(-50%, -50%) scale(1);
     }
-    /* scale -> class */
+
     .rule h3 {
         margin-bottom: 10px;
     }
@@ -84,5 +82,4 @@ export default{
         color: #fff;
         background-color: #333;
     }
-    /* kết hợp CSS3 với VueJs để xây dựng hiệu ứng - Zoom in - Zoom out */
-</style>
+</style> -->

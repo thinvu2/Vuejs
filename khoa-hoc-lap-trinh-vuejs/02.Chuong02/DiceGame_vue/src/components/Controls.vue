@@ -1,45 +1,27 @@
 <template>
     <div class="wrapper-controls">
-        <button class="control btn-new" v-on:click = "newGame"><i class="ion-ios-plus-outline"></i>New game</button>
+        <button class="control btn-new">Xúc Xắc</button>
         <button class="control btn-roll" v-on:click = "rollDice"><i class="ion-ios-loop"></i>Roll dice</button>
-        <button class="control btn-hold" v-on:click = "$emit('handleHoldScore')"><i class="ion-ios-download-outline"></i>Hold</button>
-            
-        <input type="number" 
-            placeholder="Final score" 
-            class="final-score" 
-            v-bind:value="finalScore"
-            v-on:input = "$emit('handleChangeFinalScore', $event)"
-            v-bind:disabled="isPlaying"
-        />
     </div>         
 </template>
 <script>
 export default {
     name:'controls',
     props:{
-        finalScore:{ type: [Number, String], default: 0},
-        isPlaying: {type: Boolean, default: false}
     },
     data() {
         return{
-
         }
     },
     methods:{
-        newGame(){
-          //  console.log("newGame Controls.vue: ");
-            //Kich hoat su kien handleNewGame vua app truyen vao
-            this.$emit('handleNewGame');
-        },
         rollDice(){
-          console.log("rollDice Controls.vue");
             this.$emit('handleRollDice');
         },
     }
 }
 </script>
+
 <style>
-/* control */
 .control {
     position: absolute;
     width: 200px;
@@ -48,8 +30,8 @@ export default {
     color: #555;
     background: none;
     border: none;
-    font-family: Lato;
-    font-size: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 25px;
     text-transform: uppercase;
     cursor: pointer;
     font-weight: 300;
@@ -67,17 +49,22 @@ export default {
 }
 
 .control i {
-    color: #42b983;
+    color: #0bb669;
     display: inline-block;
     margin-right: 15px;
-    font-size: 32px;
+    font-size: 40px;
     line-height: 1;
     vertical-align: text-top;
     margin-top: -4px;
     transition: margin 0.3s;
 }
 
-.btn-new { top: 45px;}
+.btn-new { 
+    font-size: 40px;
+    top: 45px;
+    font-weight: 500;
+    color: aliceblue;
+}
 .btn-roll { top: 403px;}
 .btn-hold { top: 467px;}
 

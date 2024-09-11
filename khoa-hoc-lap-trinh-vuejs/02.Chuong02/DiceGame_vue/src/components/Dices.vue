@@ -1,6 +1,9 @@
 <template>
     <div class="wrapper-dice">
-        <div id="dice-1" class="dice">
+        <div class="dice">
+            <div class="bowl">
+            </div>
+            <div id="roll-dice1">
                 <div class="spinner" v-bind:class = "'dice-' + dices[0]">
                     <div class="face1">1</div>
                     <div class="face2">2</div>
@@ -10,7 +13,7 @@
                     <div class="face6">6</div>
                 </div>
             </div>
-            <div id="dice-2" class="dice">
+            <div id="roll-dice2">
                 <div class="spinner" v-bind:class = "'dice-' + dices[1]">
                     <div class="face1">1</div>
                     <div class="face2">2</div>
@@ -20,7 +23,7 @@
                     <div class="face6">6</div>
                 </div>
             </div>
-            <div id="dice-3" class="dice">
+            <div id="roll-dice3">
                 <div class="spinner" v-bind:class = "'dice-' + dices[2]">
                     <div class="face1">1</div>
                     <div class="face2">2</div>
@@ -30,6 +33,8 @@
                     <div class="face6">6</div>
                 </div>
             </div>
+        </div>
+
     </div>
 </template>
 <script>
@@ -45,25 +50,51 @@ export default {
     },
 }
 </script>
+
 <style>
-/* Dieces */
-#dice-1 { top: 120px; }
-#dice-2 { top: 250px; }
+.bowl{
+    position: absolute;
+    top: 25%;
+    left: 25%;
+    border: 1px solid rgb(109 107 95);
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+}
+#roll-dice1 {
+    position: absolute;
+    top: 30px;
+    left: 50px;
+}
+
+#roll-dice2 {
+    position: absolute;
+    top: 80px;
+    left: 20px;
+}
+
+#roll-dice3{
+    position: absolute;
+    bottom: 60px;
+    left: 75px;
+}
 
 .dice {
     position: absolute;
+    background-color: #151411;
+    top: 30%;
     left: 50%;
     transform: translateX(-50%);
-    width: 120px;
-    height: 120px;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    border: 2px solid rgb(189, 178, 90);
     box-shadow: 0px 10px 60px rgba(0, 0, 0, 0.10);
 }
 .spinner div {
     position: absolute;
-    /* width: 120px;
-    height: 120px; */
-    width: 50px;
-    height: 50px;
+    width: 30px;
+    height: 30px;
     border: 1px solid #ccc;
     box-shadow: 0 0 20px rgba(0,0,0,0.2);
     text-align: center;
