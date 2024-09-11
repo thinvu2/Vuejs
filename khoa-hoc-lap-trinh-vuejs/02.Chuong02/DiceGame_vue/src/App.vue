@@ -2,59 +2,39 @@
 	<div id="app">
         <h1>Dice game</h1>
         <div class="wrapper clearfix">  
-            <players
-                v-bind:currentScore = "currentScore">
-            </players>
-
-            <controls
-                v-on:handleRollDice = "handleRollDice">
-            </controls>
-
             <dices
-            v-bind:dices="dices">
+            v-bind:dices="dices"
+            v-on:handleRollDice = "handleRollDice">
             </dices>
+
+            <players v-bind:currentScore="currentScore"></players>
         </div>
 	</div>
 </template>
 
 <script>
 import Players from './components/Players.vue';
-import Controls from './components/Controls.vue';
 import Dices from './components/Dices.vue';
 export default {
 	name: 'app',
 	data () {
 		return {
-            isPlaying: false,
-            isOpenPopup: false,
-            activePlayer: 0,
             currentScore: 0,
             dices: [1, 1, 1],
 		}
 	},
 	components: {
-        Players,
-        Controls,
         Dices,
+        Players
     },
-    //     isWinner(){
-    //         let {scoresPlayer , finalScore} = this;
-    //         if(scoresPlayer[0] >= finalScore || scoresPlayer[1] >= finalScore){
-    //            this.isPlaying = false;
-    //             return true;
-    //         }
-    //         return false;
-    //     }
-    // },
+
     methods:{
         handleRollDice(){
                 let dice1 = Math.floor(Math.random() * 6) + 1;
                 let dice2 = Math.floor(Math.random() * 6) + 1;
                 let dice3 = Math.floor(Math.random() * 6) + 1;
-                //console.log(dice1, dice2, dice3);
                 this.dices = [dice1, dice2, dice3];
                 this.currentScore = dice1 + dice2 + dice3;
-               // console.log('this.currentScore', this.currentScore)
         },
     },
 }

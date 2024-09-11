@@ -1,11 +1,11 @@
 <template>
     <div class="wrapper-player">
         <div class="player-panel">
-                <div class="player-name" v-bind:class = "{active: currentScore < 11}">Tài</div>
+                <div class="player-name" v-bind:class = "{active: currentScore > 10}">Tài</div>
             </div>
             
         <div class="player-panel">
-            <div class="player-name" v-bind:class = "{active: currentScore > 10}">Xỉu</div>
+            <div class="player-name" v-bind:class = "{active: currentScore >= 3 && currentScore <= 10}">Xỉu</div>
         </div>
     </div>
 </template>
@@ -14,13 +14,11 @@ export default {
     name:'players',
 
     props:{
-           currentScore: { type: Number}
+           currentScore: { type: Number, default: 0}
         },
 
     data() {
-        return{
-            
-        }
+        return{}
     },
 }
 </script>

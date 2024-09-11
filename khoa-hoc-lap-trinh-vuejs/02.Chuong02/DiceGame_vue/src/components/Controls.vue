@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
     <div class="wrapper-controls">
         <button class="control btn-new">Xúc Xắc</button>
         <button class="control btn-roll" v-on:click = "rollDice"><i class="ion-ios-loop"></i>Roll dice</button>
@@ -83,4 +83,4 @@ export default {
 }
 
 .final-score:focus { outline: none; }
-</style>
+</style> -->

@@ -1,6 +1,6 @@
 <template>
     <div class="wrapper-dice">
-        <div class="dice">
+        <div class="dice" v-bind:class = "countDown">
             <div class="bowl">
             </div>
             <div id="roll-dice1">
@@ -34,7 +34,10 @@
                 </div>
             </div>
         </div>
-
+        <!-- dice 2 -->
+        <div class="dice" v-bind:class ="{hideDice: hideDice}">
+            <div class="item-second">{{ seconds }}</div>
+        </div>
     </div>
 </template>
 <script>
@@ -45,13 +48,57 @@ export default {
     },
     data(){
         return{
-
+            countDownSeconds: 60,
+            hideDice: false,
+            dicesLocal: [...this.dices],
         }
     },
+    created () {
+        setInterval(() =>{
+            this.countDown();
+        }, 1000);
+    },
+
+    methods:{
+        countDown(){
+            this.countDownSeconds --;
+            if(this.countDownSeconds == 0){
+                this.hideDice = true;
+                this.$emit('handleRollDice');
+            }
+            if(this.countDownSeconds == -13){
+                this.hideDice = false;
+                this.countDownSeconds = 60;
+            }
+        }
+    },
+    computed:{
+        seconds: function(){
+            return this.countDownSeconds;
+        }
+    },
+    watch: {
+        dices(newVal) {
+            this.dicesLocal = [...newVal];
+        }
+    }
 }
 </script>
 
 <style>
+.item-second{
+    position: absolute;
+    left: 60px;
+    top: 40px;
+    font-size: 80px;
+    color:gray;
+    
+}
+
+.hideDice{
+    display: none;
+}
+
 .bowl{
     position: absolute;
     top: 25%;
