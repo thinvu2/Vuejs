@@ -69,6 +69,8 @@ export default {
             if(this.countDownSeconds == -13){
                 this.hideDice = false;
                 this.countDownSeconds = 60;
+                // gửi yêu cầu đến App.vue
+                this.$emit('resetScore');
             }
         }
     },

@@ -4,7 +4,8 @@
         <div class="wrapper clearfix">  
             <dices
             v-bind:dices="dices"
-            v-on:handleRollDice = "handleRollDice">
+            v-on:handleRollDice = "handleRollDice"
+            v-on:resetScore = "resetScore">
             </dices>
 
             <players v-bind:currentScore="currentScore"></players>
@@ -36,6 +37,9 @@ export default {
                 this.dices = [dice1, dice2, dice3];
                 this.currentScore = dice1 + dice2 + dice3;
         },
+        resetScore(){
+            this.currentScore = 0;
+        }
     },
 }
 </script>
