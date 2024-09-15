@@ -1,6 +1,10 @@
 <template>
     <div class="wrapper-dice">
-        <div class="dice" v-bind:class = "countDown">
+        <!-- <div class="count-after-roll">
+            {{ secondAfterRoll }}
+        </div> -->
+
+        <div class="dice" v-bind:class = "countDown" v-if="hidePlate">
             <div class="bowl">
             </div>
             <div id="roll-dice1">
@@ -36,6 +40,23 @@
         </div>
         <!-- dice 2 -->
         <div class="dice" v-bind:class ="{hideDice: hideDice}">
+        <!-- <transition name="slide-fade">
+            <div class="plate" 
+                v-if="!hidePlate"
+                @mousedown="onMouseDown" 
+                @mouseup="onMouseUp"
+                @mousemove="onMouseMove"
+                :style="{ transform: plateTransform }">
+            </div>
+        </transition> -->
+
+        <div class="plate" 
+                v-if="!hidePlate"
+                @mousedown="onMouseDown" 
+                @mouseup="onMouseUp"
+                @mousemove="onMouseMove">
+        </div>
+
             <div class="item-second">{{ seconds }}</div>
         </div>
     </div>
@@ -48,10 +69,13 @@ export default {
     },
     data(){
         return{
-            countDownSeconds: 60,
+            countDownSeconds: 30,
             hideDice: false,
             dicesLocal: [...this.dices],
-        }
+            isDragging: false,
+            hidePlate: false,
+            plateTransform: 'translate(0px, 0px)',
+        };
     },
     created () {
         setInterval(() =>{
@@ -60,6 +84,31 @@ export default {
     },
 
     methods:{
+
+        onMouseDown() {
+            this.isDragging = true;
+        },
+        onMouseUp() {
+            this.isDragging = false;
+            this.hidePlate = true;
+            // setTimeout(() => {
+                
+            // }, 300);
+        },
+        onMouseMove(event) {
+            if(this.isDragging) {
+                const plate = event.target;
+                const plateRect = plate.getBoundingClientRect();
+
+                const offsetX = event.clientX - plateRect.width / 2;
+                const offsetY = event.clientY - plateRect.height / 2;
+
+                plate.style.transform = `translate(${offsetX}px, ${offsetY}px) scale(0.8)`;
+            }
+        },
+        // new countDownSeconds == 0 then 
+       // secondAfterRoll = 13 count ve 1 
+       
         countDown(){
             this.countDownSeconds --;
             if(this.countDownSeconds == 0){
@@ -68,8 +117,8 @@ export default {
             }
             if(this.countDownSeconds == -13){
                 this.hideDice = false;
-                this.countDownSeconds = 60;
-                // gửi yêu cầu đến App.vue
+                this.countDownSeconds = 30;
+                // sent request to App.vue
                 this.$emit('resetScore');
             }
         }
@@ -91,16 +140,35 @@ export default {
 .item-second{
     position: absolute;
     left: 60px;
-    top: 40px;
+    top: 50px;
     font-size: 80px;
     color:gray;
-    
 }
 
 .hideDice{
     display: none;
 }
-
+.plate {
+    position: absolute;
+    background-image: url(/public/assets/plate1.png);
+    background-position: center;
+    background-size: auto;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 1px solid rgb(189, 178, 90);
+    box-shadow: 0px 10px 60px rgba(0, 0, 0, 0.10);
+    cursor: grab;
+    transition: transform 0.5s ease, opacity 0.5s ease;
+}
+/* .slide-fade-enter-active, .slide-fade-leave-active {
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.slide-fade-enter, .slide-fade-leave-to {
+    opacity: 0;
+    transform: translate(50px, 50px) scale(0.5);
+} */
 .bowl{
     position: absolute;
     top: 25%;
@@ -137,8 +205,9 @@ export default {
     width: 200px;
     height: 200px;
     border-radius: 50%;
-    border: 2px solid rgb(189, 178, 90);
+    border: 1px solid rgb(189, 178, 90);
     box-shadow: 0px 10px 60px rgba(0, 0, 0, 0.10);
+    transition: opacity 0.3s ease-in;
 }
 .spinner div {
     position: absolute;

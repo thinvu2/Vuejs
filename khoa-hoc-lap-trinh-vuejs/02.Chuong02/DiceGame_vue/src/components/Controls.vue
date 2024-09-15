@@ -1,86 +1,64 @@
-<!-- <template>
-    <div class="wrapper-controls">
-        <button class="control btn-new">Xúc Xắc</button>
-        <button class="control btn-roll" v-on:click = "rollDice"><i class="ion-ios-loop"></i>Roll dice</button>
-    </div>         
+<template>
+    <div class="container">
+        <div v-for="(score, index) in arrSaveScore" 
+            v-bind:key = "index" 
+            v-bind:class = "['circle', scoreClass (score)]">
+        </div>
+    </div>
 </template>
 <script>
 export default {
     name:'controls',
     props:{
+        arrSaveScore:{
+            type: Array, 
+            default:() =>[]
+        },
     },
     data() {
-        return{
-        }
+        return{}
     },
     methods:{
-        rollDice(){
-            this.$emit('handleRollDice');
-        },
+        scoreClass(score) {
+            
+            if (score > 10) {
+                return 'black';
+            }else if (score >=3 && score <=10) {
+                return 'white';
+            }
+            return '';
+        }
     }
 }
 </script>
 
 <style>
-.control {
+.container{
     position: absolute;
-    width: 200px;
-    left: 50%;
-    transform: translateX(-50%);
-    color: #555;
-    background: none;
-    border: none;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 25px;
-    text-transform: uppercase;
-    cursor: pointer;
-    font-weight: 300;
-    transition: background-color 0.3s, color 0.3s;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    left: 30%;
+    bottom: 33%;
+    border: 1px solid rgb(167, 97, 97);
+    width: 403px;
+    height: 12px;
+    border-radius: 5px;
+    
 }
-.control.disable {
-    pointer-events: none;
+.circle {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid #bdbaba;
 }
-
-.control:hover { font-weight: 600; }
-.control:hover i { margin-right: 20px; }
-
-.control:focus {
-    outline: none;
+.white{
+    background-color: #fff;
 }
-
-.control i {
-    color: #0bb669;
-    display: inline-block;
-    margin-right: 15px;
-    font-size: 40px;
-    line-height: 1;
-    vertical-align: text-top;
-    margin-top: -4px;
-    transition: margin 0.3s;
+.black{
+    background-color: #000;
 }
-
-.btn-new { 
-    font-size: 40px;
-    top: 45px;
-    font-weight: 500;
-    color: aliceblue;
-}
-.btn-roll { top: 403px;}
-.btn-hold { top: 467px;}
-
-.final-score {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    top: 520px;
-    color: #555;
-    font-size: 18px;
-    font-family: 'Lato';
-    text-align: center;
-    padding: 10px;
-    width: 160px;
-    text-transform: uppercase;
-}
-
-.final-score:focus { outline: none; }
-</style> -->
+</style>

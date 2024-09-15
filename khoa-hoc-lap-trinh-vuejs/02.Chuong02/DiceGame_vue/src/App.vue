@@ -1,6 +1,6 @@
 <template>
 	<div id="app">
-        <h1>Dice game</h1>
+        <h1>Tài Xỉu Online</h1>
         <div class="wrapper clearfix">  
             <dices
             v-bind:dices="dices"
@@ -9,11 +9,14 @@
             </dices>
 
             <players v-bind:currentScore="currentScore"></players>
+
+          <controls v-bind:arrSaveScore = "arrSaveScore"></controls>
         </div>
 	</div>
 </template>
 
 <script>
+import Controls from './components/Controls.vue';
 import Players from './components/Players.vue';
 import Dices from './components/Dices.vue';
 export default {
@@ -22,20 +25,31 @@ export default {
 		return {
             currentScore: 0,
             dices: [1, 1, 1],
+            arrSaveScore:[]
 		}
 	},
 	components: {
         Dices,
-        Players
+        Players,
+        Controls
     },
 
     methods:{
         handleRollDice(){
-                let dice1 = Math.floor(Math.random() * 6) + 1;
-                let dice2 = Math.floor(Math.random() * 6) + 1;
-                let dice3 = Math.floor(Math.random() * 6) + 1;
-                this.dices = [dice1, dice2, dice3];
-                this.currentScore = dice1 + dice2 + dice3;
+            let dice1 = Math.floor(Math.random() * 6) + 1;
+            let dice2 = Math.floor(Math.random() * 6) + 1;
+            let dice3 = Math.floor(Math.random() * 6) + 1;
+            this.dices = [dice1, dice2, dice3];
+            this.currentScore = dice1 + dice2 + dice3;
+
+            this.arrSaveScore.push(this.currentScore);
+
+            if(this.arrSaveScore.length === 41){
+                this.arrSaveScore.shift();
+            }
+           // arrSaveScore have 3 element, 1 element create 1 <div class="circle"></div> 
+           // if  currentScore > 10 <div class="circle black"></div>
+           // if currentScore >= 3 && currentScore <= 10  <div class="circle white"></div>
         },
         resetScore(){
             this.currentScore = 0;
