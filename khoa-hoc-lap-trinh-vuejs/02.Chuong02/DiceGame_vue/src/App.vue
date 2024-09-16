@@ -41,7 +41,6 @@ export default {
             let dice3 = Math.floor(Math.random() * 6) + 1;
             this.dices = [dice1, dice2, dice3];
             this.currentScore = dice1 + dice2 + dice3;
-
             this.arrSaveScore.push(this.currentScore);
 
             if(this.arrSaveScore.length === 41){

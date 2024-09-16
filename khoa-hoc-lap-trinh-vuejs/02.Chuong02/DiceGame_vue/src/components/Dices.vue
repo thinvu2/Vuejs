@@ -1,10 +1,10 @@
 <template>
     <div class="wrapper-dice">
-        <!-- <div class="count-after-roll">
-            {{ secondAfterRoll }}
-        </div> -->
+        <div class="countdown-after-roll" v-bind:class ="{hideAfterRoll: hideAfterRoll}">
+            <h3>{{ countDownAfterRoll }}</h3>
+        </div>
 
-        <div class="dice" v-bind:class = "countDown" v-if="hidePlate">
+        <div class="dice" v-bind:class = "countDown">
             <div class="bowl">
             </div>
             <div id="roll-dice1">
@@ -50,12 +50,7 @@
             </div>
         </transition> -->
 
-        <div class="plate" 
-                v-if="!hidePlate"
-                @mousedown="onMouseDown" 
-                @mouseup="onMouseUp"
-                @mousemove="onMouseMove">
-        </div>
+            <div class="plate"></div>
 
             <div class="item-second">{{ seconds }}</div>
         </div>
@@ -73,54 +68,68 @@ export default {
             hideDice: false,
             dicesLocal: [...this.dices],
             isDragging: false,
-            hidePlate: false,
-            plateTransform: 'translate(0px, 0px)',
+            countDownAfterRoll: 13,
+            hideAfterRoll: true,
+            setIntervalID: null,
+            //hidePlate: false,
+            //plateTransform: 'translate(0px, 0px)',
         };
     },
     created () {
-        setInterval(() =>{
-            this.countDown();
-        }, 1000);
+        this.startCountDown();
     },
 
     methods:{
 
-        onMouseDown() {
-            this.isDragging = true;
-        },
-        onMouseUp() {
-            this.isDragging = false;
-            this.hidePlate = true;
-            // setTimeout(() => {
-                
-            // }, 300);
-        },
-        onMouseMove(event) {
-            if(this.isDragging) {
-                const plate = event.target;
-                const plateRect = plate.getBoundingClientRect();
+        // onMouseDown() {
+        //     this.isDragging = true;
+        // },
+        // onMouseUp() {
+        //     this.isDragging = false;
+        //     this.hidePlate = true;
+        // },
+        // onMouseMove(event) {
+        //     if(this.isDragging) {
+        //         const plate = event.target;
+        //         const plateRect = plate.getBoundingClientRect();
 
-                const offsetX = event.clientX - plateRect.width / 2;
-                const offsetY = event.clientY - plateRect.height / 2;
+        //         const offsetX = event.clientX - plateRect.width / 2;
+        //         const offsetY = event.clientY - plateRect.height / 2;
 
-                plate.style.transform = `translate(${offsetX}px, ${offsetY}px) scale(0.8)`;
-            }
-        },
+        //         plate.style.transform = `translate(${offsetX}px, ${offsetY}px) scale(0.8)`;
+        //     }
+        // },
         // new countDownSeconds == 0 then 
        // secondAfterRoll = 13 count ve 1 
        
+       startCountDown() {
+        this.setIntervalID = setInterval(() =>{
+                this.countDown();
+            }, 1000);
+        },
         countDown(){
             this.countDownSeconds --;
-            if(this.countDownSeconds == 0){
-                this.hideDice = true;
-                this.$emit('handleRollDice');
-            }
-            if(this.countDownSeconds == -13){
-                this.hideDice = false;
-                this.countDownSeconds = 30;
-                // sent request to App.vue
-                this.$emit('resetScore');
-            }
+            if(this.countDownSeconds <= 0){
+                if(this.countDownSeconds === 0) {
+                    this.hideDice = true;
+                    this.hideAfterRoll = false;
+            //start if countDownSeconds == 0 then countDownAfterRoll--
+                    this.setIntervalID = setInterval(() =>{
+                        this.countDownAfterRoll --;
+
+                        if(this.countDownAfterRoll <= 0){
+
+                            clearInterval(this.setIntervalID);
+                            this.countDownAfterRoll = 13;
+                            this.hideDice = false;
+                            this.hideAfterRoll = true;
+                            this.countDownSeconds = 30;
+                            this.$emit('resetScore');
+                        }
+                    }, 1000);
+                    this.$emit('handleRollDice');
+                } 
+            } 
         }
     },
     computed:{
@@ -137,6 +146,22 @@ export default {
 </script>
 
 <style>
+.countdown-after-roll{
+    position: absolute;
+    left: 49%;
+    top: 25.5%;
+    color: red;
+    border: 1px solid rgb(146, 146, 146);
+    width: 30px;
+    height: 25px;
+    border-radius: 2px;
+}
+.countdown-after-roll h3{
+    text-align: center;
+}
+.hideAfterRoll{
+    display: none;
+}
 .item-second{
     position: absolute;
     left: 60px;
@@ -162,13 +187,6 @@ export default {
     cursor: grab;
     transition: transform 0.5s ease, opacity 0.5s ease;
 }
-/* .slide-fade-enter-active, .slide-fade-leave-active {
-    transition: opacity 0.5s ease, transform 0.5s ease;
-}
-.slide-fade-enter, .slide-fade-leave-to {
-    opacity: 0;
-    transform: translate(50px, 50px) scale(0.5);
-} */
 .bowl{
     position: absolute;
     top: 25%;
@@ -224,51 +242,51 @@ export default {
     opacity: 1;
 }
 
-.spinner .face1 { 
+.spinner .face1 {
     -webkit-transform: translateZ(60px);
     -ms-transform: translateZ(60px);
     transform: translateZ(60px);
-    background-image: url("/public/assets/dice-1.png");
+    background-image: url(/public/assets/dice-1.png);
     background-position: center;
     background-size: cover;
 }
-.spinner .face2 { 
+.spinner .face2 {
     -webkit-transform: rotateY(90deg) translateZ(60px); 
     -ms-transform: rotateY(90deg) translateZ(60px); 
     transform: rotateY(90deg) translateZ(60px); 
-    background-image: url("/public/assets/dice-2.png");
+    background-image: url(/public/assets/dice-2.png);
     background-position: center;
     background-size: cover;
 }
-.spinner .face3 { 
+.spinner .face3 {
     -webkit-transform: rotateY(90deg) rotateX(90deg) translateZ(60px); 
     -ms-transform: rotateY(90deg) rotateX(90deg) translateZ(60px); 
     transform: rotateY(90deg) rotateX(90deg) translateZ(60px); 
-    background-image: url("/public/assets/dice-3.png");
+    background-image: url(/public/assets/dice-3.png);
     background-position: center;
     background-size: cover;
 }
-.spinner .face4 { 
+.spinner .face4 {
     -webkit-transform: rotateY(180deg) rotateZ(90deg) translateZ(60px); 
     -ms-transform: rotateY(180deg) rotateZ(90deg) translateZ(60px); 
     transform: rotateY(180deg) rotateZ(90deg) translateZ(60px); 
-    background-image: url("/public/assets/dice-4.png");
+    background-image: url(/public/assets/dice-4.png);
     background-position: center;
     background-size: cover;
 }
-.spinner .face5 { 
+.spinner .face5 {
     -webkit-transform: rotateY(-90deg) rotateZ(90deg) translateZ(60px); 
     -ms-transform: rotateY(-90deg) rotateZ(90deg) translateZ(60px); 
     transform: rotateY(-90deg) rotateZ(90deg) translateZ(60px); 
-    background-image: url("/public/assets/dice-5.png");
+    background-image: url(/public/assets/dice-5.png);
     background-position: center;
     background-size: cover;
 }
-.spinner .face6 { 
+.spinner .face6 {
     -webkit-transform: rotateX(-90deg) translateZ(60px); 
     -ms-transform: rotateX(-90deg) translateZ(60px); 
     transform: rotateX(-90deg) translateZ(60px); 
-    background-image: url("/public/assets/dice-6.png");
+    background-image: url(/public/assets/dice-6.png);
     background-position: center;
     background-size: cover;
 }
