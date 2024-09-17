@@ -1,7 +1,11 @@
-import Vue from 'vue'
-import BootstrapVue  from 'bootstrap-vue'
-Vue.use(BootstrapVue)
+// main.js/ts
+import {createApp} from 'vue';
+import App from '../App.vue';
+import 'bootstrap/dist/css/bootstrap.min.css'
+//import { BootstrapVueNext } from 'bootstrap-vue-next';
+// Add the necessary CSS
+import 'bootstrap/dist/js/bootstrap.bundle.min';
+//import 'bootstrap-vue-next/dist/bootstrap-vue-next.css';
 
-// Import Bootstrap and BootstrapVue CSS files (order is important)
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
+const app = createApp(App);
+//app.use(bootstrap);
