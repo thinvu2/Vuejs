@@ -40,7 +40,7 @@
         </div>
         <!-- dice 2 -->
         <div class="dice" v-bind:class ="{hideDice: hideDice}">
-        <!-- <transition name="slide-fade">
+        <transition name="slide-fade">
             <div class="plate" 
                 v-if="!hidePlate"
                 @mousedown="onMouseDown" 
@@ -48,7 +48,7 @@
                 @mousemove="onMouseMove"
                 :style="{ transform: plateTransform }">
             </div>
-        </transition> -->
+        </transition>
 
         <div class="plate" 
                 v-if="!hidePlate"
