@@ -12,28 +12,14 @@
             </thead>
             <!-- tbody -->
              <tbody>
-
-                <tr>
-                    <td class="text-center">2</td>
-                    <td>Mở các tệp có xung đột và thực hiện các sửa đổi</td>
-                    <td class="text-center"><span class="badge badge-secondary">Small</span></td>
-                    <td>
-                        <button type="button" class="btn btn-warning">Edit</button>
-                        <button type="button" class="btn btn-danger">Delete</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="text-center">3</td>
-                    <td>Mở các tệp có xung đột và thực hiện các sửa đổi</td>
-                    <td class="text-center"><span class="badge badge-info">Medium</span></td>
-                    <td>
-                        <button type="button" class="btn btn-warning">Edit</button>
-                        <button type="button" class="btn btn-danger">Delete</button>
-                    </td>
-                </tr>
+                <todo-list-item 
+                    v-for="(task, index) in listTask" 
+                    v-bind:key = "task.id"
+                    v-bind:task = "task"
+                    v-bind:index = "index + 1">
+                </todo-list-item>
              </tbody>
         </table>
-        <todo-list-item></todo-list-item>
     </div>
 </template>
 
@@ -44,13 +30,18 @@ export default {
     components: {
         TodoListItem
     },
-    props:{
-        msg: {
-            type: String,
-            default: "hi hi"
+    props: {
+        listTask:{
+            type: Array,
+            default() {
+                return []
+            },
         }
     },
     data() {
+        return {
+
+        }
     },
 }
 </script>

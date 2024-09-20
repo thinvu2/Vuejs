@@ -1,8 +1,8 @@
 <template>
     <tr>
-        <td class="text-center">1</td>
-        <td>Mở các tệp có xung đột và thực hiện các sửa</td>
-        <td class="text-center"><span class="badge badge-danger">Hight</span></td>
+        <td class="text-center">{{ index }}</td>
+        <td>{{ task.taskName }}</td>
+        <td class="text-center"><span class="badge" :class = "getLevelColor">{{ getLevelName }}</span></td>
         <td>
             <button type="button" class="btn btn-warning">Edit</button>
             <button type="button" class="btn btn-danger">Delete</button>
@@ -12,10 +12,44 @@
 <script>
 export default {
     name: 'todo-list-item',
+    props: {
+        task: {
+            type: Object,
+            default: null
+        },
+        index: {
+            type: Number,
+            Required: true
+        },
+    },
     data() {
-        return {
-
-        }
+        return {}
+    },
+    computed: {
+        getLevelName() {
+            switch (this.task.level) {
+                case 0:
+                    return 'Small';
+                case 1:
+                    return 'Medium';
+                case 2:
+                    return 'High';
+                default:
+                    return '';
+            }
+        },
+        getLevelColor() {
+            switch (this.task.level) {
+                case 0:
+                    return { 'text-bg-primary': true };
+                case 1:
+                    return { 'text-bg-warning': true };
+                case 2:
+                    return { 'text-bg-danger': true };
+                default:
+                    return {};
+            }
+        },
     }
 }
 </script>

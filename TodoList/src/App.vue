@@ -1,52 +1,39 @@
 <template>
   <div id="app">
     <div class="container">
-      <!-- title start -->
-        <div class="page-header">
-          <h1>Todo List <small>VueJs</small></h1>
+      <comp-title></comp-title>
+
+        <div class="row">
+          <comp-control></comp-control>
+          <comp-form></comp-form>
         </div>
-        <!-- title end -->
-         <div class="row">
-            <div class="col-12 col-lg-6">
-              <div class="row">
-                <!-- sort start -->
-                 <div class="col-12">
-                  <div class="form-group">
-   <!-- Example single danger button -->
-              <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                Sort by
-              </button>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Name ASC</a></li>
-                <li><a class="dropdown-item" href="#">Name DESC</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="#">Level ASC</a></li>
-                <li><a class="dropdown-item" href="#">Level DESC</a></li>
-              </ul>
-              <span class="badge badge-success badge-medium">NAME - DESC</span>
-                  </div>
-                 </div>
-              </div>
-            </div>
-         </div>
     </div>
-    <todo-list-table v-bind:msg ="msg"></todo-list-table>
+    <todo-list-table v-bind:listTask="listTask"></todo-list-table>
   </div>
 </template>
 
 <script>
+import CompForm from "./components/CompForm.vue";
+import CompControl from "./components/CompControl.vue";
+import CompTitle from "./components/CompTitle.vue";
 import TodoListTable from "./components/TodoListTable.vue";
+import listTask from './mocks/tasks.js'
 export default{
   name: 'app',
   components: {
     TodoListTable,
+    CompTitle,
+    CompControl,
+    CompForm
   },
   data() {
     return{
-      msg:"Hello from vue-js",
-      show: false
+      listTask: listTask,
     }
   },
+  created() {
+    console.log("listTask: ", listTask);
+  }
 }
 </script>
 
