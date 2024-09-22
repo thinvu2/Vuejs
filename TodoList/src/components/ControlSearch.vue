@@ -1,9 +1,20 @@
 <template>
     <div class="col-12">
         <div class="input-group">
-            <input type="text" class="form-control" placeholder="search for..."/>
+            <input 
+                v-bind:value="strSearch"
+                v-on:input = "handleSearch"
+                type="text" 
+                class="form-control" 
+                placeholder="search for..."
+            />
             <span class="input-group-append">
-                <button class="btn btn-info" type="button">Clear</button>
+                <button 
+                    v-on:click ="clearSearch"
+                    class="btn btn-info" 
+                    type="button">
+                    Clear
+                </button>
             </span>
         </div>
     </div>
@@ -11,9 +22,28 @@
 <script>
 export default {
     name: 'control-search',
+    props: {
+        strSearch: {
+            type: String,
+            default: ''
+        }
+    },
     data() {
         return {
 
+        }
+    },
+    created() {
+        console.log("strSearch ControlSearch.vue", this.strSearch);
+    },
+    methods: {
+        clearSearch() {
+            this.$emit('handleSearch', '');
+        },
+        handleSearch(e) {
+            console.log(e.target);
+            console.log('handleSearch ControlSearch.vue')
+            this.$emit('handleSearch', e.target.value);
         }
     }
 }

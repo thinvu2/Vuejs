@@ -4,7 +4,10 @@
         <!-- sort start -->
             <control-sort></control-sort>
             <!-- search -->
-             <control-search></control-search>
+             <control-search
+                :strSearch = "strSearch"
+                v-on:handleSearch = "handleSearch">
+            </control-search>
      
         </div>
     </div>
@@ -18,9 +21,19 @@ export default {
         ControlSearch,
         ControlSort
     },
+    props: {
+        strSearch: {
+            type: String,
+            default: ''
+        }
+    },
     data() {
-        return {
-
+        return {}
+    },
+    methods: { 
+        handleSearch(data) {
+            console.log("handleSearch CompControl.vue", data);
+            this.$emit('handleSearch', data);
         }
     }
 }

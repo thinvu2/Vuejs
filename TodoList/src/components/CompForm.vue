@@ -1,8 +1,11 @@
 <template>
     <div class="col-12 col-lg-6">
-        <form-add></form-add>
+        <form-add 
+            v-on:handleAddTask = "handleAddTask"
+            :isShowForm = "isShowForm">
+        </form-add>
             <!-- end -->
-            <form action="" method="POST" class="form-inline justify-content-between">
+            <form  v-if="isShowForm" action="" method="POST" class="form-inline justify-content-between">
                 <div class="form-group">
                     <label for="" class="sr-only">label</label>
                     <input type="text" class="form-control" placeholder="Task Name"/>
@@ -16,7 +19,7 @@
                     </select>
                 </div>
                 <button type="button" class="btn btn-primary">Submit</button>
-                <button type="button" class="btn btn-secondary">Cancel</button>
+                <button v-on:click = "cancelForm" type="button" class="btn btn-secondary">Cancel</button>
             </form>
     </div> 
 </template>
@@ -27,9 +30,22 @@ export default {
     components: {
         FormAdd,
     },
+    props: {
+        isShowForm: {
+            type: Boolean,
+            default: false
+        }
+    },
     data() {
-        return {
-
+        return {}
+    },
+    methods: {
+        cancelForm() {
+            this.$emit('toggleForm');
+        },
+        handleAddTask() {
+            console.log("handleAddTask CompForm.vue");
+            this.$emit('toggleForm');
         }
     }
 }

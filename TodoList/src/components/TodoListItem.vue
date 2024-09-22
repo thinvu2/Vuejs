@@ -10,6 +10,7 @@
     </tr>
 </template>
 <script>
+import mapLevel from '../mocks/level';
 export default {
     name: 'todo-list-item',
     props: {
@@ -23,32 +24,40 @@ export default {
         },
     },
     data() {
-        return {}
+        return {
+            mapLevel: mapLevel,
+        }
     },
+    // created() {
+    //     console.log("task: ", task);
+    // },  
     computed: {
         getLevelName() {
-            switch (this.task.level) {
-                case 0:
-                    return 'Small';
-                case 1:
-                    return 'Medium';
-                case 2:
-                    return 'High';
-                default:
-                    return '';
-            }
+            return this.mapLevel[this.task.level].name;
+           // console.log("mapLevel", mapLevel)
+            // switch (this.task.level) {
+            //     case 0:
+            //         return 'Small';
+            //     case 1:
+            //         return 'Medium';
+            //     case 2:
+            //         return 'High';
+            //     default:
+            //         return '';
+            // }
         },
         getLevelColor() {
-            switch (this.task.level) {
-                case 0:
-                    return { 'text-bg-primary': true };
-                case 1:
-                    return { 'text-bg-warning': true };
-                case 2:
-                    return { 'text-bg-danger': true };
-                default:
-                    return {};
-            }
+            return this.mapLevel[this.task.level].class;
+            // switch (this.task.level) {
+            //     case 0:
+            //         return { 'text-bg-primary': true };
+            //     case 1:
+            //         return { 'text-bg-warning': true };
+            //     case 2:
+            //         return { 'text-bg-danger': true };
+            //     default:
+            //         return {};
+            // }
         },
     }
 }

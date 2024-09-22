@@ -4,8 +4,14 @@
       <comp-title></comp-title>
 
         <div class="row">
-          <comp-control></comp-control>
-          <comp-form></comp-form>
+          <comp-control
+            :strSearch = "strSearch"
+            v-on:handleSearch ="handleSearch">
+          </comp-control>
+          <comp-form
+            :isShowForm = "isShowForm"
+            v-on:toggleForm = "toggleForm">
+          </comp-form>
         </div>
     </div>
     <todo-list-table v-bind:listTask="listTask"></todo-list-table>
@@ -29,10 +35,22 @@ export default{
   data() {
     return{
       listTask: listTask,
+      isShowForm: false,
+      strSearch: '',
     }
   },
   created() {
     console.log("listTask: ", listTask);
+  },
+  methods: {
+    toggleForm() {
+      console.log("toggleForm App.vue");
+      this.isShowForm = !this.isShowForm;
+    },
+    handleSearch(data) {
+      console.log("handleSearch App.vue", data);
+      this.strSearch = data;
+    }
   }
 }
 </script>
