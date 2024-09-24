@@ -54,15 +54,24 @@ export default{
   // },
   methods: {
     handleDeleteItem(taskDelete) {
-     //console.log("handleDeleteItem App.vue", taskDelete);
+    // console.log("handleDeleteItem App.vue", taskDelete);
+
 
      //console.log("this.listTaskOld: ", this.listTask);
 
-     this.listTask = this.listTask.filter((item) => item.id !== taskDelete.id); return listTask
+     //this.listTask = this.listTask.filter((item) => item.id !== taskDelete.id); return listTask
       // this.listTask = this.listTask.filter(function(task) {
       //   if( task.id !== taskDelete.id) return listTask
       // });
-
+      //taskDelete.id = e.id lay index splice theo index
+      this.listTask.forEach((e,index) => {
+       // console.log("e:", e, " index: ", index);
+        if(taskDelete.id === e.id){
+          console.log("index: ", index);
+          this.listTask.splice(index, 1);
+        }
+      });
+    //  const removed = this.listTask.splice(2, 0, "drum");
       //console.log("this.listTaskNew: ", this.listTask);
 
     },
