@@ -11,13 +11,21 @@
                 </tr>
             </thead>
             <!-- tbody -->
-             <tbody>
+             <tbody v-if="listTask.length !== 0">
                 <todo-list-item 
                     v-for="(task, index) in listTask" 
                     v-bind:key = "task.id"
                     v-bind:task = "task"
-                    v-bind:index = "index + 1">
+                    v-bind:index = "index + 1"
+                    v-on:handleDeleteItem = "handleDeleteItem">
                 </todo-list-item>
+             </tbody>
+             <tbody v-else>
+                <tr>
+                    <td>
+                        <h3>List Empty</h3>
+                    </td>
+                </tr>
              </tbody>
         </table>
     </div>
@@ -39,10 +47,15 @@ export default {
         }
     },
     data() {
-        return {
+        return {}
+    },
+    methods: {
+        handleDeleteItem(taskDelete) {
+          //  console.log('handleDeleteItem ListTable.vue', taskDelete);
+            this.$emit('handleDeleteItem', taskDelete);
 
         }
-    },
+    }
 }
 </script>
 

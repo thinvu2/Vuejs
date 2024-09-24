@@ -2,7 +2,11 @@
     <div class="col-12 col-lg-6">
         <div class="row">
         <!-- sort start -->
-            <control-sort></control-sort>
+            <control-sort
+                :orderDir = "orderDir"
+                :orderBy = "orderBy"
+                v-on:handleSort = "handleSort">
+            </control-sort>
             <!-- search -->
              <control-search
                 :strSearch = "strSearch"
@@ -22,17 +26,18 @@ export default {
         ControlSort
     },
     props: {
-        strSearch: {
-            type: String,
-            default: ''
-        }
+        strSearch: { type: String,  default: '' },
+        orderBy: { type: String, default: 'taskName' },
+        orderDir: { type: String, default: 'asc' }
     },
     data() {
         return {}
     },
     methods: { 
+        handleSort(orderBy, orderDir) {
+            this.$emit('handleSort', orderBy, orderDir);
+        },
         handleSearch(data) {
-            console.log("handleSearch CompControl.vue", data);
             this.$emit('handleSearch', data);
         }
     }

@@ -6,25 +6,35 @@
         Sort by
         </button>
         <ul class="dropdown-menu">
-        <li><a class="dropdown-item" href="#">Name ASC</a></li>
-        <li><a class="dropdown-item" href="#">Name DESC</a></li>
+        <li v-on:click ="handleSort('taskName', 'asc')" class="dropdown-item">Name ASC</li>
+        <li v-on:click ="handleSort('taskName', 'desc')" class="dropdown-item">Name DESC</li>
         <li><hr class="dropdown-divider"></li>
-        <li><a class="dropdown-item" href="#">Level ASC</a></li>
-        <li><a class="dropdown-item" href="#">Level DESC</a></li>
+        <li v-on:click ="handleSort('level', 'asc')" class="dropdown-item">Level ASC</li>
+        <li v-on:click ="handleSort('level', 'desc')" class="dropdown-item">Level DESC</li>
         </ul>
-        <span class="badge badge-success badge-medium">NAME - DESC</span>
+        <span class="order-text badge text-bg-success">{{ orderBy }} - {{ orderDir }}</span>
     </div>
 </div>
 </template>
 <script>
 export default {
     name: 'control-sort',
+    props: {
+        orderBy: { type: String, default: 'taskName' },
+        orderDir: { type: String, default: 'asc' }
+    },
     data() {
-        return {
-
+        return {}
+    },
+    methods: {
+        handleSort(orderBy, orderDir) {
+            this.$emit('handleSort', orderBy, orderDir);
         }
     }
 }
 </script>
 <style>
+.order-text{
+    text-transform: uppercase;
+}
 </style>

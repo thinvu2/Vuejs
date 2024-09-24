@@ -44,7 +44,7 @@ export default {
             this.$emit('toggleForm');
         },
         handleAddTask() {
-            console.log("handleAddTask CompForm.vue");
+            //console.log("handleAddTask CompForm.vue");
             this.$emit('toggleForm');
         }
     }
