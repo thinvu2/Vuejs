@@ -17,7 +17,8 @@
                     v-bind:key = "task.id"
                     v-bind:task = "task"
                     v-bind:index = "index + 1"
-                    v-on:handleDeleteItem = "handleDeleteItem">
+                    v-on:handleDeleteItem = "handleDeleteItem"
+                    v-on:handleEditItem = "handleEditItem">
                 </todo-list-item>
              </tbody>
              <tbody v-else>
@@ -50,6 +51,10 @@ export default {
         return {}
     },
     methods: {
+        handleEditItem(taskDelete) {
+            console.log("handleEditItem ListTable.vue");
+            this.$emit('handleEditItem', taskDelete);
+        },
         handleDeleteItem(taskDelete) {
           //  console.log('handleDeleteItem ListTable.vue', taskDelete);
             this.$emit('handleDeleteItem', taskDelete);

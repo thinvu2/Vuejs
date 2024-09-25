@@ -11,15 +11,19 @@
             v-on:handleSearch = "handleSearch"
             v-on:handleSort = "handleSort">
           </comp-control>
+          <!-- comp-form -->
           <comp-form
             :isShowForm = "isShowForm"
-            v-on:toggleForm = "toggleForm">
+            v-on:toggleForm = "toggleForm"
+            v-bind:taskSelected="taskSelected"
+            v-on:handleAddNewTask = "handleAddNewTask">
           </comp-form>
         </div>
     </div>
     <todo-list-table 
       v-bind:listTask = "listTaskSort"
-      v-on:handleDeleteItem = "handleDeleteItem">
+      v-on:handleDeleteItem = "handleDeleteItem"
+      v-on:handleEditItem="handleEditItem">
     </todo-list-table>
   </div>
 </template>
@@ -46,34 +50,49 @@ export default{
       isShowForm: false,
       strSearch: '',
       orderBy: 'taskName',
-      orderDir: 'asc'
+      orderDir: 'asc',
+      taskSelected: null
     }
   },
   // created() {
   //   console.log("listTask: ", listTask);
   // },
   methods: {
+    handleAddNewTask(objTask) {
+      this.listTask.push(objTask);
+      console.log("handleAddNewTask App.vue: ", objTask);
+    },
+    handleEditItem(taskDelete) {
+      this.taskSelected = taskDelete;
+      this.isShowForm = true;
+      console.log("handleEditItem App.vue", taskDelete);
+      console.log("this: ", this);
+      // truyen vao compform
+    },
     handleDeleteItem(taskDelete) {
-    // console.log("handleDeleteItem App.vue", taskDelete);
-
-
-     //console.log("this.listTaskOld: ", this.listTask);
-
+      // c1
      //this.listTask = this.listTask.filter((item) => item.id !== taskDelete.id); return listTask
-      // this.listTask = this.listTask.filter(function(task) {
-      //   if( task.id !== taskDelete.id) return listTask
-      // });
-      //taskDelete.id = e.id lay index splice theo index
+    //  c2 
+      //use forEach taskDelete.id = e.id lay index splice theo index
       this.listTask.forEach((e,index) => {
-       // console.log("e:", e, " index: ", index);
+        //console.log("this.listTask: ", this.listTask);
         if(taskDelete.id === e.id){
-          console.log("index: ", index);
-          this.listTask.splice(index, 1);
+          //console.log("e:", e, " index ", index)
+        this.listTask.splice(index, 1);
         }
       });
-    //  const removed = this.listTask.splice(2, 0, "drum");
-      //console.log("this.listTaskNew: ", this.listTask);
-
+      // c3 use for:
+      // let idxDelete  = -1;
+      // for(let index = 0; index < this.listTask.length; index++) {
+      //   console.log("this.listTaskOld: ", this.listTask);
+      //   if(this.listTask[index].id === taskDelete.id) {
+      //     idxDelete = index;
+      //     console.log("idxDelete: ", idxDelete);
+      //     break;
+      //   }
+      // }
+      // console.log("this.listTaskNew: ", this.listTask);
+      //  this.listTask.splice(idxDelete, 1);
     },
     compareSort(a, b) {
       let numberSort = this.orderDir === 'asc' ? -1 : 1;
@@ -88,7 +107,16 @@ export default{
     // },
     toggleForm() {
       //console.log("toggleForm App.vue");
-      this.isShowForm = !this.isShowForm;
+      if(this.isShowForm){
+        this.isShowForm = false
+
+        this.taskSelected = null
+      }
+      else{
+        this.isShowForm = !this.isShowForm;
+      }
+
+
     },
     handleSearch(data) {
       //console.log("handleSearch App.vue", data);
@@ -134,7 +162,7 @@ export default{
 }
 </script>
 
-<style scoped>
+<style>
 body {
   padding: 100px 0;
 }

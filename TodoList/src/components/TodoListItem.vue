@@ -4,7 +4,12 @@
         <td>{{ task.taskName }}</td>
         <td class="text-center"><span class="badge" :class = "getLevelColor">{{ getLevelName }}</span></td>
         <td>
-            <button type="button" class="btn btn-warning">Edit</button>
+            <button 
+                v-on:click = "handleEditItem" 
+                type="button" 
+                class="btn btn-warning">
+                Edit
+            </button>
             <button 
                 v-on:click = "handleDeleteItem"
                 type="button" 
@@ -45,8 +50,13 @@ export default {
         },
     },
     methods: {
+        handleEditItem() {
+            this.$emit('handleEditItem', this.task);
+        },
         handleDeleteItem() {
-            this.$emit('handleDeleteItem', this.task)
+            if (confirm("Are you sure you want to delete?")) {
+                this.$emit('handleDeleteItem', this.task)
+            }
         }
     }
 }
