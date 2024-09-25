@@ -18,7 +18,20 @@
                         <option value="2">High</option>
                     </select>
                 </div>
-                <button v-on:click = "handleAddNewTask" type="button" class="btn btn-primary">Submit</button>
+                <button 
+                    v-if="this.taskSelected === null"
+                    v-on:click = "handleAddNewTask" 
+                    type="button" 
+                    class="btn btn-primary">
+                    Submit
+                </button>
+                <button 
+                    v-else
+                    v-on:click = "handleEditTask" 
+                    type="button" 
+                    class="btn btn-primary">
+                    Update
+                </button>
                 <button v-on:click = "handleCancel" type="button" class="btn btn-secondary">Cancel</button>
             </form>
     </div>
@@ -45,14 +58,26 @@ export default {
     // created() {
     //     console.log("taskSelected, created: ", this.taskSelected)
     // },
-    beforeUpdate() {
-        console.log("beforeUpdate", this.taskSelected);
-        if(this.taskSelected !== null) {
-            this.taskName = this.taskSelected.taskName;
-            this.level = this.taskSelected.level;
+    // beforeUpdate() {
+    //     console.log("beforeUpdate", this.taskSelected);
+    //     if(this.taskSelected !== null) {
+    //         this.taskName = this.taskSelected.taskName;
+    //         this.level = this.taskSelected.level;
+    //     }
+    // },
+    watch: {
+        taskSelected: function(newData, oldData) {
+            if(newData !== null) {
+            this.taskName = newData.taskName;
+            this.level = newData.level;
+        }
+            console.log("watcher: ", newData, " Old Data: ", oldData)
         }
     },
     methods: {
+        handleEditTask() {
+            console.log("handleEditTask CompForm.vue", this.taskSelected);
+        },
         handleAddNewTask() {
             let objTask = {
                 id: uuidv4(),
