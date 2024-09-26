@@ -71,12 +71,19 @@ export default {
             this.taskName = newData.taskName;
             this.level = newData.level;
         }
-            console.log("watcher: ", newData, " Old Data: ", oldData)
+            //console.log("watcher: ", newData, " Old Data: ", oldData)
         }
     },
     methods: {
         handleEditTask() {
-            console.log("handleEditTask CompForm.vue", this.taskSelected);
+         //   console.log("handleEditTask CompForm.vue", this.taskSelected, " this.taskName: ", this.taskName);
+            const objEditTask = {
+                taskSelected: this.taskSelected.id,
+                taskName: this.taskName,
+                level: parseInt(this.level)
+            }
+            this.$emit('handleEditTask', objEditTask);
+            this.handleToggleForm();
         },
         handleAddNewTask() {
             let objTask = {

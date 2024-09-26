@@ -16,7 +16,8 @@
             :isShowForm = "isShowForm"
             v-on:toggleForm = "toggleForm"
             v-bind:taskSelected="taskSelected"
-            v-on:handleAddNewTask = "handleAddNewTask">
+            v-on:handleAddNewTask = "handleAddNewTask"
+            v-on:handleEditTask="handleEditTask">
           </comp-form>
         </div>
     </div>
@@ -58,25 +59,52 @@ export default{
   //   console.log("listTask: ", listTask);
   // },
   methods: {
+    handleEditTask(objEditTask) {
+     //func
+      // const self = this;
+      // this.listTask.forEach(function(item, index) {
+      //     if (item.id === objEditTask.taskSelected.id) {
+      //       self.listTask.splice(index, 1, { id: objEditTask.taskSelected.id, taskName: objEditTask.taskName, level: objEditTask.level })
+      //     }
+      // });
+      //arrow func
+      // console.log("objEditTask", objEditTask);
+      // this.listTask.forEach((item, index) => {
+      //   if (item.id === objEditTask.taskSelected) {
+      //     this.listTask.splice(index, 1, objEditTask)
+      //   }
+      // });
+      //use findIndex:
+ 
+    //let index = this.listTask.findIndex((day) => day.id === objEditTask.taskSelected);
+    let index = this.listTask.findIndex(function(item) {
+      return item.id === objEditTask.taskSelected;
+    })
+    if(index !== -1) {
+      this.listTask.splice(index, 1, objEditTask);
+    }
+console.log(index); // 2
+
+    },
     handleAddNewTask(objTask) {
       this.listTask.push(objTask);
-      console.log("handleAddNewTask App.vue: ", objTask);
+  //    console.log("handleAddNewTask App.vue: ", objTask);
     },
-    handleEditItem(taskDelete) {
-      this.taskSelected = taskDelete;
+    handleEditItem(editItem) {
+      this.taskSelected = editItem;
       this.isShowForm = true;
-      console.log("handleEditItem App.vue", taskDelete);
-      console.log("this: ", this);
+     // console.log("handleEditItem App.vue", taskEdit);
+     // console.log("this: ", this);
       // truyen vao compform
     },
-    handleDeleteItem(taskDelete) {
+    handleDeleteItem(deleteItem) {
       // c1
      //this.listTask = this.listTask.filter((item) => item.id !== taskDelete.id); return listTask
     //  c2 
       //use forEach taskDelete.id = e.id lay index splice theo index
       this.listTask.forEach((e,index) => {
         //console.log("this.listTask: ", this.listTask);
-        if(taskDelete.id === e.id){
+        if(deleteItem.id === e.id){
           //console.log("e:", e, " index ", index)
         this.listTask.splice(index, 1);
         }
@@ -115,8 +143,6 @@ export default{
       else{
         this.isShowForm = !this.isShowForm;
       }
-
-
     },
     handleSearch(data) {
       //console.log("handleSearch App.vue", data);
