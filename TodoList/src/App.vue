@@ -34,6 +34,7 @@ import CompForm from "./components/CompForm.vue";
 import CompControl from "./components/CompControl.vue";
 import CompTitle from "./components/CompTitle.vue";
 import TodoListTable from "./components/TodoListTable.vue";
+import { nextTick } from "vue";
 import listTask from './mocks/tasks.js'
 import tasks from "./mocks/tasks.js";
 import level from "./mocks/level.js";
@@ -47,7 +48,7 @@ export default{
   },
   data() {
     return{
-      listTask: listTask,
+      listTask: null,
       isShowForm: false,
       strSearch: '',
       orderBy: 'taskName',
@@ -55,9 +56,22 @@ export default{
       taskSelected: null
     }
   },
-  // created() {
-  //   console.log("listTask: ", listTask);
-  // },
+  created() {
+   let tasks = localStorage.getItem('tasks');
+   if(tasks !== null){
+    this.listTask = JSON.parse(tasks);
+    
+   }else{
+    this.listTask = [];
+   }
+  },
+  watch: {
+    listTask: function(newTasks) {
+      console.log("newTasks: ", newTasks);
+      let tasksString = JSON.stringify(newTasks);
+      console.log("tasksString: ", tasksString);
+    }
+  },
   methods: {
     handleEditTask(objEditTask) {
      //func
@@ -165,8 +179,13 @@ console.log(index); // 2
       //   }
       // });
       //Filter c2
-      let newItems = this.listTask.filter((item) => item.taskName.toLowerCase().includes(strSearch.toLowerCase()))
-      return newItems;
+      if(!this.listTask){
+        console.log("");
+      }else{
+        let newItems = this.listTask.filter((item) => item.taskName.toLowerCase().includes(strSearch.toLowerCase()))
+        return newItems;
+      }
+
       // let newItems = this.listTask.filter(item => {
       //   return item.taskName.toLowerCase().includes(strSearch.toLowerCase())
       // })
