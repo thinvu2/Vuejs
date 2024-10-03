@@ -52,11 +52,9 @@ export default {
     },
     methods: {
         handleEditItem(editItem) {
-        //    console.log("handleEditItem ListTable.vue");
             this.$emit('handleEditItem', editItem);
         },
         handleDeleteItem(deleteItem) {
-          //  console.log('handleDeleteItem ListTable.vue', taskDelete);
             this.$emit('handleDeleteItem', deleteItem);
 
         }

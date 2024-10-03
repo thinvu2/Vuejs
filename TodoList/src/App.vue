@@ -34,10 +34,6 @@ import CompForm from "./components/CompForm.vue";
 import CompControl from "./components/CompControl.vue";
 import CompTitle from "./components/CompTitle.vue";
 import TodoListTable from "./components/TodoListTable.vue";
-import { nextTick } from "vue";
-import listTask from './mocks/tasks.js'
-import tasks from "./mocks/tasks.js";
-import level from "./mocks/level.js";
 export default{
   name: 'app',
   components: {
@@ -59,96 +55,79 @@ export default{
   created() {
    let tasks = localStorage.getItem('tasks');
    if(tasks !== null){
-    this.listTask = JSON.parse(tasks);
-    
-   }else{
+    const parsedTasks = JSON.parse(tasks);
+    if(Array.isArray(parsedTasks)){
+      this.listTask = parsedTasks;
+    } else{
+      console.error('Parsed tasks is not an array:', parsedTasks);
+      this.listTask = [];
+    }
+   } else{
     this.listTask = [];
    }
   },
   watch: {
     listTask: function(newTasks) {
-      console.log("newTasks: ", newTasks);
       let tasksString = JSON.stringify(newTasks);
-      console.log("tasksString: ", tasksString);
+      localStorage.setItem('tasks', tasksString);
+    }
+  },
+  computed: {
+    listTaskSearch() {
+      const { strSearch } = this;
+      if(!Array.isArray(this.listTask)){
+        console.error('listTask is not an array:', this.listTask);
+        this.listTask = [];
+      }else{
+        let newItems = this.listTask.filter((item) => item.taskName.toLowerCase().includes(strSearch.toLowerCase()))
+        return newItems;
+      }
+    },
+
+    listTaskSort() {
+      let listTask = [...this.listTaskSearch];
+      listTask.sort(this.compareSort);
+      return listTask;
     }
   },
   methods: {
     handleEditTask(objEditTask) {
-     //func
-      // const self = this;
-      // this.listTask.forEach(function(item, index) {
-      //     if (item.id === objEditTask.taskSelected.id) {
-      //       self.listTask.splice(index, 1, { id: objEditTask.taskSelected.id, taskName: objEditTask.taskName, level: objEditTask.level })
-      //     }
-      // });
-      //arrow func
-      // console.log("objEditTask", objEditTask);
-      // this.listTask.forEach((item, index) => {
-      //   if (item.id === objEditTask.taskSelected) {
-      //     this.listTask.splice(index, 1, objEditTask)
-      //   }
-      // });
-      //use findIndex:
- 
-    //let index = this.listTask.findIndex((day) => day.id === objEditTask.taskSelected);
-    let index = this.listTask.findIndex(function(item) {
-      return item.id === objEditTask.taskSelected;
-    })
-    if(index !== -1) {
-      this.listTask.splice(index, 1, objEditTask);
-    }
-console.log(index); // 2
+      let index = this.listTask.findIndex(function(item) {
+        return item.id === objEditTask.taskSelected;
+      })
+      if(index !== -1) {
+        this.listTask.splice(index, 1, objEditTask);
+      }
+    },
 
-    },
     handleAddNewTask(objTask) {
+      if(!Array.isArray(this.listTask)) this.listTask = [];
       this.listTask.push(objTask);
-  //    console.log("handleAddNewTask App.vue: ", objTask);
+      this.listTask = [...this.listTask];
     },
+
     handleEditItem(editItem) {
       this.taskSelected = editItem;
       this.isShowForm = true;
-     // console.log("handleEditItem App.vue", taskEdit);
-     // console.log("this: ", this);
-      // truyen vao compform
     },
+
     handleDeleteItem(deleteItem) {
-      // c1
-     //this.listTask = this.listTask.filter((item) => item.id !== taskDelete.id); return listTask
-    //  c2 
-      //use forEach taskDelete.id = e.id lay index splice theo index
+      if(!Array.isArray(this.listTask)) this.listTask = [];
       this.listTask.forEach((e,index) => {
-        //console.log("this.listTask: ", this.listTask);
         if(deleteItem.id === e.id){
-          //console.log("e:", e, " index ", index)
         this.listTask.splice(index, 1);
         }
       });
-      // c3 use for:
-      // let idxDelete  = -1;
-      // for(let index = 0; index < this.listTask.length; index++) {
-      //   console.log("this.listTaskOld: ", this.listTask);
-      //   if(this.listTask[index].id === taskDelete.id) {
-      //     idxDelete = index;
-      //     console.log("idxDelete: ", idxDelete);
-      //     break;
-      //   }
-      // }
-      // console.log("this.listTaskNew: ", this.listTask);
-      //  this.listTask.splice(idxDelete, 1);
     },
+
     compareSort(a, b) {
       let numberSort = this.orderDir === 'asc' ? -1 : 1;
       if(a[this.orderBy] < b[this.orderBy]) return numberSort;
       else if(a[this.orderBy] > b[this.orderBy]) return numberSort * (-1);
       return 0;
     },
-    // compareLevel(a, b) {
-    // //  console.log("a: ", a, " b: ", b);
-    //   if(this.orderDir === 'asc') return a.level - b.level;
-    //   else if(this.orderDir === 'desc') return b.level - a.level;
-    // },
+
     toggleForm() {
-      //console.log("toggleForm App.vue");
       if(this.isShowForm){
         this.isShowForm = false
 
@@ -158,52 +137,16 @@ console.log(index); // 2
         this.isShowForm = !this.isShowForm;
       }
     },
+
     handleSearch(data) {
-      //console.log("handleSearch App.vue", data);
       this.strSearch = data;
     },
+
     handleSort(orderBy, orderDir) {
-     //console.log('handleSort App.vue', orderBy, orderDir);
       this.orderBy = orderBy;
       this.orderDir = orderDir;
     }
   },
-  computed: {
-    listTaskSearch() {
-      const { strSearch } = this;
-      //C1
-      // let newItems = [];
-      // this.listTask.forEach(function(item){
-      //   if(item.taskName.toLowerCase().includes(strSearch.toLowerCase())) {
-      //     newItems.push(item);
-      //   }
-      // });
-      //Filter c2
-      if(!this.listTask){
-        console.log("");
-      }else{
-        let newItems = this.listTask.filter((item) => item.taskName.toLowerCase().includes(strSearch.toLowerCase()))
-        return newItems;
-      }
-
-      // let newItems = this.listTask.filter(item => {
-      //   return item.taskName.toLowerCase().includes(strSearch.toLowerCase())
-      // })
-      // return newItems
-    },
-    listTaskSort() {
-      let listTask = [...this.listTaskSearch];
-
-      // console.log("listTask: ", listTask);
-      // console.log("this.compareSort: ", this.compareSort);
-      listTask.sort(this.compareSort);
-    
-      // else if(this.orderBy === 'level'){
-      //   listTask.sort(this.compareLevel);
-      // }
-      return listTask;
-    }
-  }
 }
 </script>
 

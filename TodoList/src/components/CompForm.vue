@@ -38,7 +38,6 @@
 </template>
 <script>
 import { v4 as uuidv4 } from 'uuid';
-import level from '../mocks/level';
 import FormAdd from './FormAdd.vue';
 export default {
     name: 'comp-form',
@@ -55,28 +54,16 @@ export default {
             level: 0,
         }
     },
-    // created() {
-    //     console.log("taskSelected, created: ", this.taskSelected)
-    // },
-    // beforeUpdate() {
-    //     console.log("beforeUpdate", this.taskSelected);
-    //     if(this.taskSelected !== null) {
-    //         this.taskName = this.taskSelected.taskName;
-    //         this.level = this.taskSelected.level;
-    //     }
-    // },
     watch: {
         taskSelected: function(newData, oldData) {
             if(newData !== null) {
             this.taskName = newData.taskName;
             this.level = newData.level;
         }
-            //console.log("watcher: ", newData, " Old Data: ", oldData)
         }
     },
     methods: {
         handleEditTask() {
-         //   console.log("handleEditTask CompForm.vue", this.taskSelected, " this.taskName: ", this.taskName);
             const objEditTask = {
                 taskSelected: this.taskSelected.id,
                 taskName: this.taskName,
@@ -91,16 +78,12 @@ export default {
                 taskName: this.taskName, 
                 level: parseInt(this.level),
             };
-          //  console.log("this.taskName: ", this.taskName);
             if(this.taskName) {
-
-            //    console.log("this.taskName1111: ", this.taskName);
                 this.$emit('handleAddNewTask', objTask);
                 this.handleCancel();
             }else{
                 alert("Task Name is null");
             }
-
         },
         handleToggleForm() {
             this.$emit('toggleForm');
