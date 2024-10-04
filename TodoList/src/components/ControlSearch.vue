@@ -33,16 +33,11 @@ export default {
 
         }
     },
-    // created() {
-    //     console.log("strSearch ControlSearch.vue", this.strSearch);
-    // },
     methods: {
         clearSearch() {
             this.$emit('handleSearch', '');
         },
         handleSearch(e) {
-            //console.log(e.target);
-            //console.log('handleSearch ControlSearch.vue')
             this.$emit('handleSearch', e.target.value);
         }
     }

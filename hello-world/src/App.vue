@@ -7,6 +7,18 @@
         v-bind:titleHeader = "title"
         v-on:changeTitleEvent = "handleChangeTitle"
       />
+      <!-- counter -->
+       <comp-counter
+        v-bind:count="count"
+        @handleCountPlus = "handleCountPlus"
+        @handleCountMinus  = "handleCountMinus">
+      </comp-counter>
+       <comp-counter-two
+        :count = "count"
+        @handleCountPlus = "handleCountPlus"
+        @handleCountMinus  = "handleCountMinus">
+      </comp-counter-two>
+      <!-- end-counter -->
       <comp-list-products />
       <list-users 
         v-bind:ListUsers="ListUsers"
@@ -30,10 +42,13 @@ import CompListProducts from './components/CompListProducts.vue'
 import ListUsers from './components/ListUsers.vue'
 import DemoRef from './components/DemoRef.vue'
 import DemoSlot from './components/DemoSlot.vue'
+import CompCounter from './components/CompCounter.vue'
+import CompCounterTwo from './components/CompCounterTwo.vue'
 export default {
   name: 'App',
   data(){
     return{
+      count: 0,
       title:'Hello vuejs',
       ListUsers:[
         { id:0, email: '1@gmail.com', active: false },
@@ -49,7 +64,9 @@ export default {
     CompListProducts,
     ListUsers,
     DemoRef,
-    DemoSlot
+    DemoSlot,
+    CompCounter,
+    CompCounterTwo
   },
   methods:{
     handleChangeTitle(data){
@@ -72,6 +89,13 @@ export default {
       }
       //console.log('indexDelete sau khi chay vong for', indexDelete);
       //console.log('handleDeleteUser trong App.vue', data);
+    },
+    handleCountPlus() {
+      console.log("handleCountPlus App.vue");
+      this.count ++;
+    },
+    handleCountMinus() {
+      this.count --;
     }
   },
 }

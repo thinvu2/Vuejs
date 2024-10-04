@@ -32,12 +32,8 @@ export default {
 
         }
     },
-    // created() {
-    //     console.log ("isShowForm form add.vue", this.isShowForm);
-    // },
     methods: {
         onClickAddTask() {
-            //console.log('onClickAddTask FormAdd.vue');
             this.$emit('handleToggleForm');
         }
     }

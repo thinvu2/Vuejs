@@ -38,9 +38,6 @@ export default {
             mapLevel: mapLevel,
         }
     },
-    // created() {
-    //     console.log("task: ", task);
-    // },  
     computed: {
         getLevelName() {
             return this.mapLevel[this.task.level].name;
