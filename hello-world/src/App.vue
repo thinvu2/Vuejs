@@ -18,6 +18,7 @@
         @handleCountPlus = "handleCountPlus"
         @handleCountMinus  = "handleCountMinus">
       </comp-counter-two>
+      <comp-counter-three></comp-counter-three>
       <!-- end-counter -->
       <comp-list-products />
       <list-users 
@@ -44,6 +45,7 @@ import DemoRef from './components/DemoRef.vue'
 import DemoSlot from './components/DemoSlot.vue'
 import CompCounter from './components/CompCounter.vue'
 import CompCounterTwo from './components/CompCounterTwo.vue'
+import CompCounterThree from './components/CompCounterThree.vue'
 export default {
   name: 'App',
   data(){
@@ -66,7 +68,8 @@ export default {
     DemoRef,
     DemoSlot,
     CompCounter,
-    CompCounterTwo
+    CompCounterTwo,
+    CompCounterThree
   },
   methods:{
     handleChangeTitle(data){
@@ -77,18 +80,13 @@ export default {
     handleDeleteUser(data){
       let indexDelete = -1;
       this.ListUsers.forEach((element, idx) => {
-        //console.log('element.id: ', element.id, ' idx: ', idx, ' data.id: ',data.id);
-        //console.log('element: ',element);
         if(element.id === data.id){
           indexDelete = idx;
         }
       });
       if(indexDelete != -1){
         this.ListUsers.splice(indexDelete, 1);
-       //console.log('test: ', test);
       }
-      //console.log('indexDelete sau khi chay vong for', indexDelete);
-      //console.log('handleDeleteUser trong App.vue', data);
     },
     handleCountPlus() {
       console.log("handleCountPlus App.vue");

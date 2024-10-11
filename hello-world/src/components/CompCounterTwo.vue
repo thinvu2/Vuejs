@@ -1,19 +1,15 @@
 <template>
     <div>
-        <h1>{{ count }}</h1>
+        <h1>{{ count }} <span>value2: {{ value2 }}</span></h1>
         <button v-on:click="count++">Plus</button>
         <button v-on:click="count--">Minus</button>
     </div>
 </template>
 <script>
+import { mapState } from 'vuex'
+import { mapGetters } from 'vuex'
 export default {
-    name: 'comp-counter',
-    // props:{
-    //         count: {
-    //             default: 0,
-    //             type: Number
-    //         }
-    //     },
+    name: 'comp-counter-two',
     data() {
         return{
         }
@@ -21,7 +17,15 @@ export default {
     computed: {
     count () {
       return this.$store.state.count
-    }
+    },
+    ...mapGetters([
+         'value',
+        'countDouble'
+    ]),
+    ...mapState([
+        'value2'
+    ]),
+
   },
     methods: {
         handleCountPlus() {
@@ -30,6 +34,9 @@ export default {
         handleCountMinus() {
             this.$emit('handleCountMinus');
         }
+    },
+    mounted() {
+        console.log(this.$store);
     }
 }
 </script>
