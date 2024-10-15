@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <div class="container">
+      abcd: {{ count }}
       <comp-title></comp-title>
 
         <div class="row">
@@ -34,6 +35,7 @@ import CompForm from "./components/CompForm.vue";
 import CompControl from "./components/CompControl.vue";
 import CompTitle from "./components/CompTitle.vue";
 import TodoListTable from "./components/TodoListTable.vue";
+import { mapState } from 'vuex'
 export default{
   name: 'app',
   components: {
@@ -73,6 +75,9 @@ export default{
     }
   },
   computed: {
+    ...mapState ([
+      'count'
+    ]),
     listTaskSearch() {
       const { strSearch } = this;
       if(!Array.isArray(this.listTask)){
