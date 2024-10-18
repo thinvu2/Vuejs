@@ -2,7 +2,6 @@
     <div class="col-12">
         <div class="input-group">
             <input 
-                v-bind:value="strSearch"
                 v-on:input = "handleSearch"
                 type="text" 
                 class="form-control" 
@@ -20,25 +19,21 @@
     </div>
 </template>
 <script>
+import { mapState } from 'vuex';
 export default {
     name: 'control-search',
-    props: {
-        strSearch: {
-            type: String,
-            default: ''
-        }
-    },
     data() {
-        return {
-
-        }
+        return {}
     },
+    computed: mapState([
+        'strSearch'
+    ]),
     methods: {
         clearSearch() {
-            this.$emit('handleSearch', '');
+            this.$store.dispatch('handleSearch', '');
         },
         handleSearch(e) {
-            this.$emit('handleSearch', e.target.value);
+            this.$store.dispatch('handleSearch', e.target.value);
         }
     }
 }

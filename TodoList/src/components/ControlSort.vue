@@ -17,18 +17,26 @@
 </div>
 </template>
 <script>
+import { mapState, mapActions } from 'vuex';
 export default {
     name: 'control-sort',
-    props: {
-        orderBy: { type: String, default: 'taskName' },
-        orderDir: { type: String, default: 'asc' }
-    },
     data() {
         return {}
     },
+    computed: {
+        ...mapState([
+            'orderBy',
+            'orderDir'
+        ])
+    },
     methods: {
+        ...mapActions({
+            actionHandleSort: 'handleSort'
+        }),
         handleSort(orderBy, orderDir) {
-            this.$emit('handleSort', orderBy, orderDir);
+            let data = {orderBy, orderDir}
+           console.log('handleSort',data);
+           this.actionHandleSort(data);
         }
     }
 }

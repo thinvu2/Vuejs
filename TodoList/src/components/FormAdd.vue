@@ -3,7 +3,7 @@
         <!-- Add Task -->
         <button 
             v-if="!isShowForm"
-            v-on:click ="onClickAddTask"
+            v-on:click ="toggleForm"
             type="button" 
             class="btn btn-info btn-block">
             Add Task
@@ -11,7 +11,7 @@
         <!-- Close Task -->
         <button 
             v-else
-            v-on:click ="onClickAddTask"
+            v-on:click ="toggleForm"
             type="button" 
             class="btn btn-info btn-block">
             Close Task
@@ -19,23 +19,21 @@
     </div>
 </template>
 <script>
+import { mapState, mapActions } from 'vuex';
 export default {
     name: 'form-add',
-    props: {
-        isShowForm: {
-            type: Boolean,
-            default: false
-        }
-    },
     data() {
-        return {
-
-        }
+        return {}
+    },
+    computed: {
+        ...mapState([
+            'isShowForm'
+        ])
     },
     methods: {
-        onClickAddTask() {
-            this.$emit('handleToggleForm');
-        }
+        ...mapActions([
+            'toggleForm'
+        ]),
     }
 }
 </script>

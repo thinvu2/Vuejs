@@ -1,3 +1,8 @@
+import taskName from '../mocks/tasks'
 export default {
-    count: 0
+    listTask: taskName,
+    isShowForm: false,
+    strSearch:'',
+    orderBy: 'taskName',
+    orderDir: 'asc',
 }

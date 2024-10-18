@@ -33,24 +33,44 @@
 </template>
 
 <script>
+import { mapState, mapActions, mapGetters  } from 'vuex'
 import TodoListItem from './TodoListItem.vue';
 export default {
     name: 'todo-list-table',
     components: {
         TodoListItem
     },
-    props: {
-        listTask:{
-            type: Array,
-            default() {
-                return []
-            },
-        }
-    },
+    // props: {
+    //     listTask:{
+    //         type: Array,
+    //         default() {
+    //             return []
+    //         },
+    //     }
+    // },
     data() {
         return {}
     },
+    created() {
+        let tasks = localStorage.getItem('tasks') || '[]';
+        console.log("created todo-list-table: ",JSON.parse(tasks));
+        this.changeTasks(JSON.parse(tasks));
+    },
+    watch: {
+    listTask: function(newTasks) {
+      let tasksString = JSON.stringify(newTasks);
+      localStorage.setItem('tasks', tasksString);
+    }
+  },
+    computed: {
+        ...mapGetters({
+            listTask: 'listTaskSearchSort'
+        }),
+    },
     methods: {
+        ...mapActions([
+            'changeTasks'
+        ]),
         handleEditItem(editItem) {
             this.$emit('handleEditItem', editItem);
         },
