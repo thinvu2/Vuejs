@@ -9,13 +9,11 @@
           <!-- comp-form -->
           <comp-form
             v-bind:taskSelected="taskSelected"
-            v-on:handleAddNewTask = "handleAddNewTask"
             v-on:handleEditTask="handleEditTask">
           </comp-form>
         </div>
     </div>
     <todo-list-table 
-      v-on:handleDeleteItem = "handleDeleteItem"
       v-on:handleEditItem="handleEditItem">
     </todo-list-table>
   </div>
@@ -49,25 +47,10 @@ export default{
       }
     },
 
-    handleAddNewTask(objTask) {
-      if(!Array.isArray(this.listTask)) this.listTask = [];
-      this.listTask.push(objTask);
-      this.listTask = [...this.listTask];
-    },
-
     handleEditItem(editItem) {
       this.taskSelected = editItem;
       this.isShowForm = true;
-    },
-
-    handleDeleteItem(deleteItem) {
-      if(!Array.isArray(this.listTask)) this.listTask = [];
-      this.listTask.forEach((e,index) => {
-        if(deleteItem.id === e.id){
-        this.listTask.splice(index, 1);
-        }
-      });
-    },
+    }
   },
 }
 </script>

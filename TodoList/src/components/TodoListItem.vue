@@ -1,7 +1,7 @@
 <template>
     <tr>
         <td class="text-center">{{ index }}</td>
-        <td>{{ task.taskName }}</td>
+        <td>{{ taskName }}</td>
         <td class="text-center"><span class="badge" :class = "getLevelColor">{{ getLevelName }}</span></td>
         <td>
             <button 
@@ -20,14 +20,11 @@
     </tr>
 </template>
 <script>
+import { mapActions } from 'vuex';
 import mapLevel from '../mocks/level';
 export default {
     name: 'todo-list-item',
     props: {
-        task: {
-            type: Object,
-            default: null
-        },
         index: {
             type: Number,
             Required: true
@@ -47,12 +44,16 @@ export default {
         },
     },
     methods: {
+        ...mapActions({
+            actionHandleDelete :'handleDelete'
+        }),
         handleEditItem() {
             this.$emit('handleEditItem', this.task);
         },
         handleDeleteItem() {
             if (confirm("Are you sure you want to delete?")) {
-                this.$emit('handleDeleteItem', this.task)
+                console.log('handleDeleteItem',  this.task);
+               this.actionHandleDelete(this.task);
             }
         }
     }

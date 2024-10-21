@@ -67,9 +67,10 @@ export default {
     },
 
     methods: {
-        ...mapActions([
-            'toggleForm'
-        ]),
+        ...mapActions({
+            toggleForm: 'toggleForm',
+           actionHandleAddNewTask : 'handleAddNewTask'
+        }),
         handleEditTask() {
             const objEditTask = {
                 taskSelected: this.taskSelected.id,
@@ -86,7 +87,7 @@ export default {
                 level: parseInt(this.level),
             };
             if(this.taskName) {
-                this.$emit('handleAddNewTask', objTask);
+                this.actionHandleAddNewTask(objTask);
                 this.handleCancel();
             }else{
                 alert("Task Name is null");

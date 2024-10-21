@@ -13,11 +13,6 @@
             <!-- tbody -->
              <tbody v-if="listTask.length !== 0">
                 <todo-list-item 
-                    v-for="(task, index) in listTask" 
-                    v-bind:key = "task.id"
-                    v-bind:task = "task"
-                    v-bind:index = "index + 1"
-                    v-on:handleDeleteItem = "handleDeleteItem"
                     v-on:handleEditItem = "handleEditItem">
                 </todo-list-item>
              </tbody>
@@ -40,14 +35,6 @@ export default {
     components: {
         TodoListItem
     },
-    // props: {
-    //     listTask:{
-    //         type: Array,
-    //         default() {
-    //             return []
-    //         },
-    //     }
-    // },
     data() {
         return {}
     },
