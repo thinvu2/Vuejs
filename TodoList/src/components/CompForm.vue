@@ -30,7 +30,12 @@
                     class="btn btn-primary">
                     Update
                 </button>
-                <button v-on:click = "handleCancel" type="button" class="btn btn-secondary">Cancel</button>
+                <button 
+                    v-on:click = "handleCancel" 
+                    type="button" 
+                    class="btn btn-secondary">
+                    Cancel
+                </button>
             </form>
     </div>
 </template>
@@ -42,9 +47,6 @@ export default {
     name: 'comp-form',
     components: {
         FormAdd,
-    },
-    props: {
-        taskSelected: { type: Object, default: null }
     },
     data() {
         return {
@@ -62,14 +64,16 @@ export default {
     },
     computed: {
         ...mapState([
-            'isShowForm'
+            'isShowForm',
+            'taskSelected'
         ])
     },
 
     methods: {
         ...mapActions({
             toggleForm: 'toggleForm',
-           actionHandleAddNewTask : 'handleAddNewTask'
+            actionHandleAddNewTask : 'handleAddNewTask',
+            actionHandleEditTask : 'handleEditTask'
         }),
         handleEditTask() {
             const objEditTask = {
@@ -77,7 +81,7 @@ export default {
                 taskName: this.taskName,
                 level: parseInt(this.level)
             }
-            this.$emit('handleEditTask', objEditTask);
+            this.actionHandleEditTask(objEditTask);
             this.handleToggleForm();
         },
         handleAddNewTask() {

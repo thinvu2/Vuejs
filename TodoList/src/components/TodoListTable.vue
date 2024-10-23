@@ -12,9 +12,12 @@
             </thead>
             <!-- tbody -->
              <tbody v-if="listTask.length !== 0">
-                <todo-list-item 
-                    v-on:handleEditItem = "handleEditItem">
-                </todo-list-item>
+                <todo-list-item
+                    v-for="(task, index) in listTask"
+                    v-bind:key="task.id"
+                    v-bind:task = "task"
+                    v-bind:index = "index + 1"
+                />
              </tbody>
              <tbody v-else>
                 <tr>
@@ -43,27 +46,29 @@ export default {
         console.log("created todo-list-table: ",JSON.parse(tasks));
         this.changeTasks(JSON.parse(tasks));
     },
-    watch: {
-    listTask: function(newTasks) {
-      let tasksString = JSON.stringify(newTasks);
-      localStorage.setItem('tasks', tasksString);
-    }
-  },
+//     watch: {
+//     listTask: function(newTasks) {
+//       let tasksString = JSON.stringify(newTasks);
+//       localStorage.setItem('tasks', tasksString);
+//     }
+//   },
     computed: {
         ...mapGetters({
             listTask: 'listTaskSearchSort'
         }),
     },
     methods: {
-        ...mapActions([
-            'changeTasks'
-        ]),
+        ...mapActions({
+            changeTasks: 'changeTasks',
+            actionHandleEdit : 'handleEdit',
+            actionHandleDelete : 'handleDelete'
+
+        }),
         handleEditItem(editItem) {
-            this.$emit('handleEditItem', editItem);
+            this.actionHandleEdit(editItem);
         },
         handleDeleteItem(deleteItem) {
-            this.$emit('handleDeleteItem', deleteItem);
-
+            this.actionHandleDelete(deleteItem);
         }
     }
 }

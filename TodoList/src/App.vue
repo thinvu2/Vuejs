@@ -1,25 +1,19 @@
 <template>
   <div id="app">
     <div class="container">
-      <comp-title></comp-title>
+      <comp-title />
 
         <div class="row">
-          <comp-control>
-          </comp-control>
-          <!-- comp-form -->
-          <comp-form
-            v-bind:taskSelected="taskSelected"
-            v-on:handleEditTask="handleEditTask">
-          </comp-form>
+          <comp-control />
+          <comp-form />
         </div>
     </div>
-    <todo-list-table 
-      v-on:handleEditItem="handleEditItem">
-    </todo-list-table>
+    <todo-list-table />
   </div>
 </template>
 
 <script>
+import { mapState } from "vuex";
 import CompForm from "./components/CompForm.vue";
 import CompControl from "./components/CompControl.vue";
 import CompTitle from "./components/CompTitle.vue";
@@ -33,25 +27,19 @@ export default{
     CompForm
   },
   data() {
-    return{
-      taskSelected: null
+    return{}
+  },
+  watch: {
+    listTask: function(newTasks) {
+      let tasksString = JSON.stringify(newTasks);
+      localStorage.setItem('tasks', tasksString);
     }
   },
-  methods: {
-    handleEditTask(objEditTask) {
-      let index = this.listTask.findIndex(function(item) {
-        return item.id === objEditTask.taskSelected;
-      })
-      if(index !== -1) {
-        this.listTask.splice(index, 1, objEditTask);
-      }
-    },
-
-    handleEditItem(editItem) {
-      this.taskSelected = editItem;
-      this.isShowForm = true;
-    }
-  },
+  computed: {
+    ...mapState([
+      'listTask'
+    ])
+  }
 }
 </script>
 
