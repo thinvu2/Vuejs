@@ -9,10 +9,13 @@
         </div>
     </div>
     <todo-list-table />
+    <br>
+    <route />
   </div>
 </template>
 
 <script>
+import Route from "./components/Route.vue";
 import { mapState } from "vuex";
 import CompForm from "./components/CompForm.vue";
 import CompControl from "./components/CompControl.vue";
@@ -24,7 +27,8 @@ export default{
     TodoListTable,
     CompTitle,
     CompControl,
-    CompForm
+    CompForm,
+    Route
   },
   data() {
     return{}
